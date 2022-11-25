@@ -5,20 +5,28 @@ const Tag = require('./models/Tag')
 const express = require('express')
 const linksRouter = require('./routers/links')
 const tagsRouter = require('./routers/tags')
+
 const clc = require('cli-color')
 
-mongoose.connect('mongodb://localhost:27017/test', (e) =>
-    console.log('BD connect e =', e)
+const BD_URL = 'mongodb://localhost:27017/test'
+
+
+
+console.log('---')
+console.log('Database connection...')
+mongoose.connect(BD_URL, (e) =>
+    console.log('BD connect error =', e)
 )
 
 const PORT = process.env.PORT || 3018
 const app = express()
+app.use(express.json())
+
 const options = {
     setHeaders: function (res, path) {
         console.log(clc.magentaBright('---MW static:'), clc.green(path))
     }}
-app.use(express.static('public', options)) // we start from the parent folder
-app.use(express.json())
+app.use(express.static('public', options))
 app.use((req, res, next) => {
     console.log()
     console.log(clc.magentaBright('---MW:'), clc.green(req.method), req.originalUrl)
@@ -26,35 +34,16 @@ app.use((req, res, next) => {
     next()
 })
 
-app.get('/', function (req, res) {
-    res.send('Hello World')
-})
-
-app.get('/tagss', async function (req, res) {
-    let message, colorMessage
-    try {
-        console.log('SERVER--TAGs')
-        const tag1 = await Tag.create({ title: 'JavaScript' })
-        console.log('▓ tag1', tag1)
-        const tag2 = await Tag.create({ title: 'Photoshop' })
-        console.log('▓ tag2', tag2)
-        const tag3 = await Tag.create({ title: 'YouTube' })
-        console.log('▓ tag3', tag3)
-
-        message = 'Tags created'
-        colorMessage = clc.yellow('--- OK ---\r\n' + message)
-    } catch (err) {
-        res.status(500)
-        message = { message: err.message }
-        colorMessage = clc.redBright('--- ERROR ---\r\n' + err.message)
-    } finally {
-        console.log(colorMessage)
-        res.send(message)
-    }
-})
+// app.get('/', function (req, res) {
+//     res.send('Main page WIP')
+// })
 
 app.use('/tags', tagsRouter)
 app.use('/links', linksRouter)
+
+
+
+
 
 app.get('/linkss', async function (req, res) {
     let message, colorMessage

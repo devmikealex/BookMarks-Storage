@@ -13,16 +13,16 @@ router.use(function timeLog(req, res, next) {
 
 router
     .route('/')
-    .get((req, res) => findTags(req, res))
+    .get((req, res) => findTagsByFilters(req, res, Tag))
     .post(function (req, res) {
         res.send('tag post-')
     })
 
-router.post('/filter', (req, res) => findTags(req, res))
+router.post('/filters', (req, res) => findTagsByFilters(req, res, Tag))
 
 router.get('/:id', (req, res) => {
     console.log(clc.cyanBright('----req.params:'), req.params)
-    getTagByID(req, res)
+    findTagsByFilters(req, res, Tag)
 })
 
 router.use('/createTestTags', (req, res) => createTestTags(req, res))
@@ -31,7 +31,42 @@ module.exports = router
 
 // ---------------
 
-async function findTags(req, res) {
+async function findTagsByFilters(req, res, BD) {
+    let message, colorMessage
+    try {
+        console.log(clc.cyan('----FUNC: findTagsByFilters'))
+        console.log('----BODY:\r\n', req.body)
+        console.log()
+
+        let filter = req.body
+
+        if (req.params.id) {
+            console.log('----ID detected:', req.params.id)
+            filter = { _id: req.params.id }
+        }
+        // filter = { 'title' : { '$regex' : 'Ph', '$options' : 'i' } }
+        console.log("filter:", filter)
+        const tags = await BD.find(filter)
+        console.log(`▓ find tags returned ${tags.length}:`)
+        console.log(JSON.stringify(tags, null, 2))
+        
+        message = tags
+        colorMessage = clc.yellow('--- OK ---')
+    } catch (err) {
+        res.status(500)
+        message = { message: err.message }
+        colorMessage = clc.redBright('--- ERROR ---\r\n' + err.message)
+    } finally {
+        console.log(colorMessage)
+        res.json(message)
+    }
+}
+
+
+
+
+
+async function findTags_old(req, res) {
     let message, colorMessage
     try {
         console.log(clc.cyan('----FUNC: findTags'))
@@ -64,7 +99,7 @@ async function getTagByID(req, res) {
         colorMessage = clc.redBright('--- ERROR ---\r\n' + err.message)
     } finally {
         console.log(colorMessage)
-        res.send(message)
+        res.json(message)
     }
 }
 
