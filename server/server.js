@@ -8,7 +8,8 @@ const tagsRouter = require('./routers/tags')
 
 const clc = require('cli-color')
 
-const BD_URL = 'mongodb://localhost:27017/test'
+const BD_NAME = 'test'
+const BD_URL = `mongodb://localhost:27017/${BD_NAME}`
 
 
 
@@ -34,12 +35,13 @@ app.use((req, res, next) => {
     next()
 })
 
+app.use('/tags', tagsRouter)
+app.use('/links', linksRouter)
+
 // app.get('/', function (req, res) {
 //     res.send('Main page WIP')
 // })
 
-app.use('/tags', tagsRouter)
-app.use('/links', linksRouter)
 
 
 

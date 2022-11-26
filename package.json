@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "devs": "cd server && nodemon server.js"
+    "devs": "cd server && nodemon server.js",
+    "debugs": "cd server && nodemon --inspect server.js"
   },
   "keywords": [],
   "author": "",
