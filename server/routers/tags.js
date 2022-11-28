@@ -3,28 +3,30 @@ const clc = require('cli-color')
 const express = require('express')
 const router = express.Router()
 
-const { findTagsByFilters } = require("../common/bd-func")
+const { findTagsByFilters, createTags } = require("../common/bd-func")
+
+const c = require('mylogger/colors')
+const Logger = require('mylogger')
+const log = new Logger(undefined, 'TAGS', c.cyan)
 
 const Tag = require('../models/Tag')
 
 // middleware that is specific to this router
 router.use(function timeLog(req, res, next) {
-    console.log(clc.magentaBright('----MW Tags'))
+    log.http(clc.magentaBright('MW: Tags'))
     next()
 })
 
 router
     .route('/')
     .get((req, res) => findTagsByFilters(req, res, Tag))
-    .post(function (req, res) {
-        res.send('tag post-')
-    }) 
+    .post((req, res) => createTags(req, res, Tag)) 
 
 router.post('/filters', (req, res) => findTagsByFilters(req, res, Tag))
 
 router.get('/:id', (req, res) => {
-    console.log(clc.cyanBright('----req.params:'), req.params)
-    findTagsByFilters(req, res, Tag)
+    log.debug(clc.cyan('Req.params ='), req.params)
+    findTagsByFilters(req, res, Tag) 
 })
 
 router.use('/createTestTags', (req, res) => createTestTags(req, res))

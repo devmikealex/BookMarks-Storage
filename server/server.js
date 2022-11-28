@@ -1,3 +1,6 @@
+console.log('')
+console.log('---')
+
 const mongoose = require('mongoose')
 const Link = require('./models/Link')
 const Tag = require('./models/Tag')
@@ -11,13 +14,15 @@ const clc = require('cli-color')
 const BD_NAME = 'test'
 const BD_URL = `mongodb://localhost:27017/${BD_NAME}`
 
+const c = require('mylogger/colors')
+const Logger = require('mylogger')
+const log = new Logger(undefined, 'MAIN', c.bgGreen + c.black)
 
-
-console.log('---')
-console.log('Database connection...')
-mongoose.connect(BD_URL, (e) =>
-    console.log('BD connect error =', e)
-)
+log.verbs('BD connection...')
+mongoose.connect(BD_URL, (e) => {
+    log.verbs('BD connect ended')
+    if (e) { log.error('BD connect error =', e.message) }
+})
 
 const PORT = process.env.PORT || 3018
 const app = express()
@@ -25,13 +30,13 @@ app.use(express.json())
 
 const options = {
     setHeaders: function (res, path) {
-        console.log(clc.magentaBright('---MW static:'), clc.green(path))
+        log.http(clc.magentaBright('MW static:'), clc.green(path))
     }}
 app.use(express.static('public', options))
 app.use((req, res, next) => {
-    console.log()
-    console.log(clc.magentaBright('---MW:'), clc.green(req.method), req.originalUrl)
-    console.log(clc.cyanBright('---QUERY:'), req.query)
+    console.log('')
+    log.http(clc.magentaBright('MW:'), clc.green(req.method), req.originalUrl)
+    log.http(clc.cyanBright('MW: query ='), req.query)
     next()
 })
 
@@ -96,8 +101,8 @@ app.post('/linkss', async function (req, res) {
 })
 
 app.listen(PORT, () => {
-    console.log()
-    console.log('Start server')
-    console.log('Working Dir:', process.cwd())
-    console.log(clc.yellowBright(`http://127.0.0.1:${PORT}`))
+    // console.log()
+    log.verbs('Start Express server')
+    log.debug('Working Dir:', clc.yellow(process.cwd()))
+    log.info('Server URL:', clc.yellowBright(`http://127.0.0.1:${PORT}`))
 })
