@@ -33,6 +33,7 @@ const options = {
         log.http(clc.magentaBright('MW static:'), clc.green(path))
     }}
 app.use(express.static('public', options))
+// app.use(express.static('../client/dist', options))
 app.use((req, res, next) => {
     console.log('')
     log.http(clc.magentaBright('MW:'), clc.green(req.method), req.originalUrl)
