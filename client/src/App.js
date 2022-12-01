@@ -16,7 +16,9 @@ console.log(pages)
 function App() {
     return (
         <div className='App'>
-            <h2>App</h2>
+            <h2>
+                App {process.env.REACT_APP_NAME} {process.env.NODE_ENV}
+            </h2>
             <Routes>
                 {/* <Routes location={'/link2'}> */}
                 <Route path='/link1' element={<h3>-TEST section 1-</h3>} />

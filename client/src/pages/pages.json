@@ -1,0 +1,22 @@
+[
+    {
+        "title": "Main",
+        "link": "/"
+    },
+    {
+        "title": "New",
+        "link": "/new"
+    },
+    {
+        "title": "Search",
+        "link": "/search"
+    },
+    {
+        "title": "Tags",
+        "link": "/tags"
+    },
+    {
+        "title": "Links",
+        "link": "/links"
+    }
+]
