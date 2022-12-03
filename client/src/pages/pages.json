@@ -16,6 +16,10 @@
         "link": "/tags"
     },
     {
+        "title": "Tags new",
+        "link": "/tags/new"
+    },
+    {
         "title": "Links",
         "link": "/links"
     }

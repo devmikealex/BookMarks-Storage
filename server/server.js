@@ -6,6 +6,7 @@ const Link = require('./models/Link')
 const Tag = require('./models/Tag')
 
 const express = require('express')
+const cors = require('cors')
 const linksRouter = require('./routers/links')
 const tagsRouter = require('./routers/tags')
 
@@ -21,19 +22,23 @@ const log = new Logger(undefined, 'MAIN', c.bgGreen + c.black)
 log.verbs('BD connection...')
 mongoose.connect(BD_URL, (e) => {
     log.verbs('BD connect ended')
-    if (e) { log.error('BD connect error =', e.message) }
+    if (e) {
+        log.error('BD connect error =', e.message)
+    }
 })
 
 const PORT = process.env.PORT || 3018
 const app = express()
 app.use(express.json())
+app.use(cors())
 
 const options = {
     setHeaders: function (res, path) {
         log.http(clc.magentaBright('MW static:'), clc.green(path))
-    }}
-app.use(express.static('public', options))
-// app.use(express.static('../client/dist', options))
+    },
+}
+app.use('/static', express.static('public', options))
+app.use(express.static('../client/build', options))
 app.use((req, res, next) => {
     console.log('')
     log.http(clc.magentaBright('MW:'), clc.green(req.method), req.originalUrl)
@@ -47,11 +52,6 @@ app.use('/links', linksRouter)
 // app.get('/', function (req, res) {
 //     res.send('Main page WIP')
 // })
-
-
-
-
-
 
 app.get('/linkss', async function (req, res) {
     let message, colorMessage
@@ -103,7 +103,7 @@ app.post('/linkss', async function (req, res) {
 
 app.listen(PORT, () => {
     // console.log()
-    log.verbs('Start Express server')
+    log.verbs('Start Express server / CORS-enabled')
     log.debug('Working Dir:', clc.yellow(process.cwd()))
     log.info('Server URL:', clc.yellowBright(`http://127.0.0.1:${PORT}`))
 })
