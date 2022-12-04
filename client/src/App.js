@@ -7,14 +7,16 @@ import NotFound from './pages/NotFound'
 import Search from './pages/Search'
 import Tags from './pages/Tags'
 import TagsNew from './pages/TagsNew'
+import './App.css'
 
 import pages from './pages/pages.json'
 import WebLogger from 'mylogger/web-version'
-import './App.css'
 
 const log = new WebLogger(null, ' APP', 'white-Coral')
 
 function App() {
+    log.verbs('--- Start Render App')
+
     return (
         <div className='App'>
             <h2>
@@ -38,6 +40,11 @@ function App() {
                         <Link to='/tags/637159841b9f753fa731a5aa'>
                             Tag id 637159841b9f753fa731a5aa
                         </Link>
+                    </li>
+                    <li>
+                        <a href={`${process.env.REACT_APP_SERVER}/tags/createTestTags`}>
+                            createTestTags
+                        </a>
                     </li>
                 </ul>
             </nav>

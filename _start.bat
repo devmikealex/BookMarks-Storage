@@ -6,6 +6,7 @@ cd /d %~dp0%server
 start "Server" node "server.js"
 @pause
 
+cd ..
 cd client
 npm run start
 @pause

@@ -1,13 +1,14 @@
 import WebLogger from 'mylogger/web-version'
 import { useState } from 'react'
-const log = new WebLogger(null, 'TgsNW', 'green')
+import Tags from './Tags'
+const log = new WebLogger(null, 'TAGSNEW', 'green')
 
 export default function TagsNew() {
     log.verbs('--- Start function TagsNew')
 
-    const [error, setError] = useState({})
+    const [error, setError] = useState(null)
     log.debug('Start error =', error)
-    const [newTag, setNewTag] = useState({})
+    const [newTag, setNewTag] = useState(null)
     log.debug('Start tags =', newTag)
 
     log.verbs('--- Start Render TagsNew')
@@ -17,8 +18,9 @@ export default function TagsNew() {
             <h1>Tags Create New</h1>
             <input type='text' id='asd' placeholder='title' />
             <input type='button' value='Add' onClick={Send} />
-            <p>New Tag: {JSON.stringify(newTag)}</p>
-            <p>Error: {error.message}</p>
+            {newTag && <p>New Tag: {JSON.stringify(newTag)}</p>}
+            {error && <p>Error: {error.message}</p>}
+            <Tags key={Math.random()} />
         </>
     )
 
@@ -26,7 +28,7 @@ export default function TagsNew() {
         log.verbs('--- Start function Send')
 
         const url = `${process.env.REACT_APP_SERVER}/tags`
-        log.debug('URL for fetch =', url)
+        log.debug('URL for fetch POST =', url)
         let errorFetch = false
 
         let response = await fetch(url, {
@@ -44,9 +46,9 @@ export default function TagsNew() {
         log.debug('Response.json =', resultJSON)
         if (errorFetch) {
             setError(resultJSON)
-            setNewTag({})
+            setNewTag(null)
         } else {
-            setError({})
+            setError(null)
             setNewTag(resultJSON)
         }
 

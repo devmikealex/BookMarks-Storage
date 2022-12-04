@@ -7,9 +7,9 @@ const log = new WebLogger(null, 'TAGS', 'blue')
 export default function Tags() {
     log.verbs('--- Start function Tags')
 
-    const [error, setError] = useState({})
+    const [error, setError] = useState(null)
     log.debug('Start error =', error)
-    const [tags, setTags] = useState([])
+    const [tags, setTags] = useState(null)
     log.debug('Start tags =', tags)
 
     const { id } = useParams()
@@ -31,9 +31,9 @@ export default function Tags() {
                 log.debug('Response.json =', tagsArr)
                 if (errorFetch) {
                     setError(tagsArr)
-                    setTags([])
+                    setTags(null)
                 } else {
-                    setError({})
+                    setError(null)
                     setTags(tagsArr)
                 }
             })
@@ -46,14 +46,17 @@ export default function Tags() {
 
     return (
         <>
-            <h1>Tags List / ID={id}</h1>
-            <p>
-                Tags title:
-                {tags.map((item) => {
-                    return <div key={item._id}>{item.title}</div>
-                })}
-            </p>
-            <p>Error: {error.message}</p>
+            <h1>Tags List</h1>
+            {id && <p>ID={id}</p>}
+            {tags && (
+                <div>
+                    Tags title:
+                    {tags.map((item) => {
+                        return <div key={item._id}>{item.title}</div>
+                    })}
+                </div>
+            )}
+            {error && <p>Error: {error.message}</p>}
         </>
     )
 }

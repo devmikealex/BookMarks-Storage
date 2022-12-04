@@ -76,7 +76,7 @@ async function createTestTags(req, res) {
     try {
         console.log(clc.cyan('----FUNC: createTestTags'))
         
-        const result = await Tag.deleteMany({ "title" : { "$regex" : "New Tag" }})
+        const result = await Tag.deleteMany({ "title" : { "$regex" : "aaa" }})
         console.log('▓ result', result)
 
         const tag1 = await Tag.create({ title: 'JavaScript' })
