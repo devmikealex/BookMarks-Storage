@@ -1,4 +1,9 @@
 # Название
+Севрер: Node.js + Express
+MongoDB + Mongoose
+
+Клиент: React + React Router + Material UI
+
 
 ## Сервер
 
