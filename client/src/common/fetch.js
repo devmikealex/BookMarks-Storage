@@ -18,6 +18,10 @@ export default async function myFetch(obj, path = 'links', method = 'GET') {
     let errorFetch = false,
         resultJSON
 
+    let body
+    if (method === 'GET') body = null
+    else body = JSON.stringify(obj)
+
     try {
         let response = await fetch(url, {
             method: method,
@@ -25,26 +29,22 @@ export default async function myFetch(obj, path = 'links', method = 'GET') {
                 Accept: 'application/json',
                 'Content-Type': 'application/json;charset=utf-8',
             },
-            body: JSON.stringify(obj),
+            body,
         })
         log.http('fetch status: ' + response.status)
+        log.http('fetch statusText: ' + response.statusText)
         log.http('fetch ok: ' + response.ok)
         errorFetch = !response.ok
         resultJSON = await response.json()
         log.debug('Response.json =', resultJSON)
     } catch (error) {
-        log.error(error)
-        resultJSON = error.message
+        errorFetch = true
+        log.error('fetch return error:', error)
+        resultJSON = error
     }
-
-    if (errorFetch) {
-        // setError(resultJSON)
-        // setNewTag(null)
-    } else {
-        // setError(null)
-        // setNewTag(resultJSON)
-    }
-
+    // if (errorFetch) {
+    // } else {
+    // }
     log.verbs('--- Exit function -myFetch-')
     return { errorFetch, resultJSON }
 }

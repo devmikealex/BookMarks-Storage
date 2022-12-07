@@ -3,21 +3,46 @@ const clc = require('cli-color')
 const express = require('express')
 const router = express.Router()
 
-const { findTagsByFilters } = require("../common/bd-func")
+const { findTagsByFilters, BDRequest } = require('../common/bd-func')
 
 const Link = require('../models/Link')
 
+const c = require('mylogger/colors')
+const Logger = require('mylogger')
+const log = new Logger(undefined, 'LINKS', c.green)
+
 // middleware that is specific to this router
 router.use(function timeLog(req, res, next) {
-    console.log(clc.magentaBright('---MW Links'),)
+    console.log(clc.magentaBright('---MW Links'))
     next()
 })
 
-router.route('/')
-    .get((req, res) => findTagsByFilters(req, res, Link))
-    .post(function(req, res) {
-        res.send('links post-')
-    })
+router
+    .route('/')
+    // .get((req, res) => findTagsByFilters(req, res, Link))
+    .get((req, res) => BDRequest(req, res, Link, 'find'))
+    .post((req, res) => BDRequest(req, res, Link, 'add'))
+// .post(function (req, res) {
+//     res.send('links post-')
+// })
+
+router.get('/countinc/:id', (req, res) => {
+    log.debug(clc.cyan('countinc ID processing, req.params ='), req.params)
+    Link.findByIdAndUpdate(
+        req.params.id,
+        { $inc: { clicks: 1 } },
+        { new: true },
+        function (err, doc) {
+            if (err) {
+                log.error(err)
+                res.send(err.message)
+            } else {
+                log.silly('Updated Link: ', doc)
+                res.send(doc)
+            }
+        }
+    )
+})
 
 router.post('/filters', (req, res) => findTagsByFilters(req, res, Link))
 

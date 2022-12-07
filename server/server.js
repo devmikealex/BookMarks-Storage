@@ -101,6 +101,11 @@ app.post('/linkss', async function (req, res) {
     }
 })
 
+// app.use(function (req, res, next) {
+//     res.status(404)
+//     res.json({ error: 'Not found' })
+// })
+
 app.listen(PORT, () => {
     // console.log()
     log.verbs('Start Express server / CORS-enabled')

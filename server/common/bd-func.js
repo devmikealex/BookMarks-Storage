@@ -2,6 +2,7 @@ const clc = require('cli-color')
 
 const c = require('mylogger/colors')
 const Logger = require('mylogger')
+const Link = require('../models/Link')
 const log = new Logger(undefined, 'BDfnc', c.bgCyan + c.black)
 
 /**
@@ -14,7 +15,7 @@ const log = new Logger(undefined, 'BDfnc', c.bgCyan + c.black)
  */
 async function BDRequest(req, res, BD, mode) {
     const FUNC_NAME = 'BDRequest'
-    let message, colorMessage, logType, result
+    let message, colorMessage, logType, result, query
     try {
         log.verbs('--- Start func ' + c.cyan + FUNC_NAME)
         log.debug('req.body =\r\n', req.body)
@@ -27,7 +28,12 @@ async function BDRequest(req, res, BD, mode) {
                     data = { _id: req.params.id }
                 }
                 log.debug('Data for BD:', data)
-                result = await BD.find(data)
+
+                // result = await BD.find(data)
+                query = BD.find(data)
+                if (BD === Link) query = query.populate('tags')
+                result = await query.exec()
+
                 log.debug(
                     clc.bold('BD.find') +
                         ' returned: \r\n' +

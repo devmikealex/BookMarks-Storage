@@ -2,6 +2,8 @@ import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 
 import WebLogger from 'mylogger/web-version'
+import myFetch from '../common/fetch'
+import Tag from '../components/Tag'
 const log = new WebLogger(null, 'TAGS', 'blue')
 
 export default function Tags() {
@@ -17,30 +19,17 @@ export default function Tags() {
 
     useEffect(() => {
         log.verbs('Enter to useEffect[]')
-        const url = `${process.env.REACT_APP_SERVER}/tags/${id ?? ''}`
-        log.debug('URL for fetch =', url)
-        let errorFetch = false
-        fetch(url)
-            .then((response) => {
-                log.http('fetch status: ' + response.status)
-                log.http('fetch ok: ' + response.ok)
-                errorFetch = !response.ok
-                return response.json()
-            })
-            .then((tagsArr) => {
-                log.debug('Response.json =', tagsArr)
-                if (errorFetch) {
-                    setError(tagsArr)
-                    setTags(null)
-                } else {
-                    setError(null)
-                    setTags(tagsArr)
-                }
-            })
-            .catch((err) => {
-                log.error('Catch ERROR', err)
-                setError(err)
-            })
+        myFetch(null, 'tags', 'GET').then((result) => {
+            log.debug('myFetch result', result)
+            const { errorFetch, resultJSON } = result
+            if (errorFetch) {
+                setError(resultJSON)
+                setTags(null)
+            } else {
+                setError(null)
+                setTags(resultJSON)
+            }
+        })
     }, [id])
     log.verbs('--- Start Render Tags')
 
@@ -50,9 +39,8 @@ export default function Tags() {
             {id && <p>ID={id}</p>}
             {tags && (
                 <div>
-                    Tags title:
                     {tags.map((item) => {
-                        return <div key={item._id}>{item.title}</div>
+                        return <Tag item={item} key={item._id} />
                     })}
                 </div>
             )}
