@@ -1,7 +1,12 @@
+import { Chip, Paper, Typography } from '@mui/material'
+import VisibilityIcon from '@mui/icons-material/Visibility'
+
 import WebLogger from 'mylogger/web-version'
 import myFetch from '../common/fetch'
 
 import './Link.css'
+import { Box } from '@mui/system'
+import Ahref from '@mui/material/Link'
 
 const PATH_TO_PREVIEW = process.env.REACT_APP_SERVER + '/static/images/'
 
@@ -27,34 +32,51 @@ export default function Link(props) {
     //         .then((result) => log.debug('incrementCounter fetch return:', result.clicks))
     // }
 
-    return (
-        <div>
-            {props.item.title}
-            <br />
-            <a
+    function LinkWithCount(props) {
+        return (
+            <Ahref
                 href={props.item.url}
+                underline='hover'
+                color={props.color}
                 onClick={() => incrementCounter(props.item._id)}
                 onAuxClick={() => incrementCounter(props.item._id)}
                 target='_blank'
                 rel='noopener noreferrer'
             >
-                {props.item.url}
-            </a>
-            <br />
-            {props.item.description}
-            <br />
-            {props.item.tags.map((item) => {
-                return <div className='tgsss'>{item.title}</div>
-            })}
-            <br />
-            {props.item.images.map((item) => {
-                return <img src={PATH_TO_PREVIEW + item} width='200' alt='' key={item} />
-            })}
-            <br />
-            {props.item.clicks}
-            <br />
-            {props.item.crt_date} - {props.item.mod_date}
-            <hr />
-        </div>
+                {props.children}
+            </Ahref>
+        )
+    }
+
+    return (
+        <Paper variant='outlined' sx={{ m: 2 }}>
+            <Box sx={{ p: 3 }}>
+                <LinkWithCount item={props.item} color='text.primary'>
+                    <Typography variant='h5'>{props.item.title}</Typography>
+                </LinkWithCount>
+                <LinkWithCount item={props.item}>{props.item.url}</LinkWithCount>
+                <Typography variant='body2' color='lightgray'>
+                    {props.item._id}
+                </Typography>
+                <Box>
+                    {props.item.tags.map((item) => {
+                        return <Chip label={item.title} key={item._id} />
+                    })}
+                </Box>
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    <VisibilityIcon color='success' fontSize='small' />
+                    <Typography pl={0.5} variant='body2' color='success.main'>
+                        Clicks: {props.item.clicks}
+                    </Typography>
+                </Box>
+                {props.item.crt_date} --- {props.item.mod_date}
+                <Typography>{props.item.description}</Typography>
+                {props.item.images.map((item) => {
+                    return (
+                        <img src={PATH_TO_PREVIEW + item} width='200' alt='' key={item} />
+                    )
+                })}
+            </Box>
+        </Paper>
     )
 }

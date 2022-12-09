@@ -10,21 +10,5 @@
     {
         "title": "Search",
         "link": "/search"
-    },
-    {
-        "title": "Tags",
-        "link": "/tags"
-    },
-    {
-        "title": "Tags new",
-        "link": "/tags/new"
-    },
-    {
-        "title": "Links",
-        "link": "/links"
-    },
-    {
-        "title": "Links New",
-        "link": "/links/new"
     }
 ]
