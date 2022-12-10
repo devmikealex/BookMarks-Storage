@@ -1,13 +1,19 @@
 import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 
-import WebLogger from 'mylogger/web-version'
 import myFetch from '../common/fetch'
 import Tag from '../components/Tag'
+import TagsNew from './TagsNew'
+import { Box } from '@mui/material'
+
+import WebLogger from 'mylogger/web-version'
 const log = new WebLogger(null, 'TAGS', 'blue')
 
-export default function Tags() {
+export default function Tags(props) {
     log.verbs('--- Start function Tags')
+
+    const [forceRerender, setForceRerender] = useState(true)
+    log.silly('Start forceRerender =', forceRerender)
 
     const [error, setError] = useState(null)
     log.debug('Start error =', error)
@@ -16,6 +22,8 @@ export default function Tags() {
 
     const { id } = useParams()
     log.debug('id =', id)
+
+    const deletable = props.deletable ?? false
 
     useEffect(() => {
         log.verbs('Enter to useEffect[]')
@@ -30,21 +38,30 @@ export default function Tags() {
                 setTags(resultJSON)
             }
         })
-    }, [id])
+    }, [id, forceRerender])
     log.verbs('--- Start Render Tags')
 
     return (
         <>
-            <h1>Tags List</h1>
             {id && <p>ID={id}</p>}
             {tags && (
-                <div>
+                <Box sx={{ flexDirection: 'row' }}>
                     {tags.map((item) => {
-                        return <Tag item={item} key={item._id} />
+                        return (
+                            <Tag
+                                item={item}
+                                key={item._id}
+                                setTagsValue={props.setTagsValue}
+                                deletable={deletable}
+                                setForceRerender={setForceRerender}
+                            />
+                        )
                     })}
-                </div>
+                </Box>
             )}
+
             {error && <p>Error: {error.message}</p>}
+            <TagsNew setForceRerender={setForceRerender} />
         </>
     )
 }

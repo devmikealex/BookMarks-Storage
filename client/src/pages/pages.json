@@ -1,13 +1,5 @@
 [
     {
-        "title": "Main",
-        "link": "/"
-    },
-    {
-        "title": "New",
-        "link": "/new"
-    },
-    {
         "title": "Search",
         "link": "/search"
     }

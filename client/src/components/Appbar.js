@@ -1,18 +1,14 @@
-// import * as React from 'react'
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
-import IconButton from '@mui/material/IconButton'
 
 import Brightness4Icon from '@mui/icons-material/Brightness4'
 import DatasetLinkedOutlinedIcon from '@mui/icons-material/DatasetLinkedOutlined'
 import SellOutlinedIcon from '@mui/icons-material/SellOutlined'
-import LinkIcon from '@mui/icons-material/Link'
 import AddIcon from '@mui/icons-material/Add'
 import SearchIcon from '@mui/icons-material/Search'
 import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark'
-import MenuIcon from '@mui/icons-material/Menu'
 
 import './Appbar.css'
 import {
@@ -86,16 +82,20 @@ const themeLight = createTheme({
 })
 
 export default function Appbar(props) {
-    // theme.palette.mode = props.darkMode ? 'light' : 'dark'
-
-    // console.log('🚀 ~ file: Appbar.js:80 ~ Appbar ~ theme', theme)
-
     return (
         <ThemeProvider theme={props.darkMode ? themeDark : themeLight}>
             <AppBar position='sticky' sx={{ alignItems: 'center' }}>
                 <Toolbar sx={{ maxWidth: 'lg', width: '100%', gap: '8px' }}>
-                    <CollectionsBookmarkIcon />
-                    <Typography variant='h6' component='div' sx={{ flexGrow: 1, ml: 2 }}>
+                    <Button
+                        component={RRLink}
+                        to='/'
+                        sx={{ borderRadius: 10, padding: 1, minWidth: 0 }}
+                        color='inherit'
+                    >
+                        <CollectionsBookmarkIcon />
+                    </Button>
+
+                    <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
                         BookMarks Storage
                     </Typography>
 
@@ -109,22 +109,13 @@ export default function Appbar(props) {
                         />
                     </Search>
 
-                    <Button
-                        component={RRLink}
-                        to='/links/new'
-                        color='inherit'
-                        // sx={{
-                        //     '&:hover': {
-                        //         backgroundColor: 'primary.main',
-                        //     },
-                        // }}
-                    >
+                    <Button component={RRLink} to='/links/new' color='inherit'>
                         <AddIcon />
-                        Add Link
+                        Link
                     </Button>
                     <Button component={RRLink} to='/tags/new' color='inherit'>
                         <AddIcon />
-                        Add Tag
+                        Tag
                     </Button>
                     <Button component={RRLink} to='/links' color='inherit'>
                         <DatasetLinkedOutlinedIcon fontSize='small' sx={{ mr: 0.5 }} />

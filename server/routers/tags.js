@@ -3,7 +3,7 @@ const clc = require('cli-color')
 const express = require('express')
 const router = express.Router()
 
-const { BDRequest } = require("../common/bd-func")
+const { BDRequest } = require('../common/bd-func')
 
 const c = require('mylogger/colors')
 const Logger = require('mylogger')
@@ -20,7 +20,8 @@ router.use(function timeLog(req, res, next) {
 router
     .route('/')
     .get((req, res) => BDRequest(req, res, Tag, 'find'))
-    .post((req, res) => BDRequest(req, res, Tag, 'add')) 
+    .post((req, res) => BDRequest(req, res, Tag, 'add'))
+    .delete((req, res) => BDRequest(req, res, Tag, 'delete'))
 
 router.post('/filters', (req, res) => BDRequest(req, res, Tag, 'find'))
 
@@ -28,9 +29,8 @@ router.use('/createTestTags', (req, res) => createTestTags(req, res))
 
 router.get('/:id', (req, res) => {
     log.debug(clc.cyan('ID processing, req.params ='), req.params)
-    BDRequest(req, res, Tag, 'find') 
+    BDRequest(req, res, Tag, 'find')
 })
-
 
 module.exports = router
 
@@ -75,8 +75,8 @@ async function createTestTags(req, res) {
     let message, colorMessage
     try {
         console.log(clc.cyan('----FUNC: createTestTags'))
-        
-        const result = await Tag.deleteMany({ "title" : { "$regex" : "aaa" }})
+
+        const result = await Tag.deleteMany({ title: { $regex: 'aaa' } })
         console.log('▓ result', result)
 
         const tag1 = await Tag.create({ title: 'JavaScript' })

@@ -1,3 +1,6 @@
+@echo ! --- GO TO DESKTOP --- !
+@TIMEOUT /T 10
+
 cd /d "s:\Pf not install SSD\MongoDB\"
 start "BD" mongod.exe
 rem @pause

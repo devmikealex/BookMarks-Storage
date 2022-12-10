@@ -1,8 +1,11 @@
+import { Alert, Button, Paper, TextField, Typography } from '@mui/material'
+import SendIcon from '@mui/icons-material/Send'
+
 import myFetch from '../common/fetch'
 import WebLogger from 'mylogger/web-version'
-import Links from './Links'
 import Tags from './Tags'
 import { useState } from 'react'
+import Link from '../components/Link'
 const log = new WebLogger(null, 'LinksNEW', 'magenta')
 
 export default function LinksNew() {
@@ -12,6 +15,11 @@ export default function LinksNew() {
     log.debug('Start error =', error)
     const [newLinks, setNewLinks] = useState(null)
     log.debug('Start newLinks =', newLinks)
+
+    const [tagsValue, setTagsValue] = useState('')
+    const handleChange = (event) => {
+        setTagsValue(event.target.value)
+    }
 
     async function Send(e) {
         log.verbs('--- Start function -Send-')
@@ -59,48 +67,82 @@ export default function LinksNew() {
     }
     log.verbs('--- Start Render -LinksNew-')
     return (
-        <>
-            <h1>Links NEW</h1>
-            <h2>Add new link</h2>
+        <Paper variant='outlined' sx={{ m: 2, boxShadow: 3, p: 3 }}>
+            <Typography variant='h3'>Create a new link</Typography>
             <form onSubmit={Send}>
-                <label>
-                    Title :
-                    <input type='text' name='title' placeholder='title' />
-                </label>
-                <br />
-                <label>
-                    URL :
-                    <input type='text' name='url' placeholder='url' />
-                </label>
-                <br />
-                <label>
-                    Description :
-                    <input type='text' name='description' placeholder='description' />
-                </label>
-                <br />
-                <label>
-                    Tags :
-                    <input id='tags' type='text' name='tags' placeholder='tags' />
-                </label>
-                <Tags />
-                <br />
-                <label>
-                    Images :
-                    <input type='text' name='images' placeholder='images' />
-                </label>
-                <br />
-                <button>Send</button>
+                <TextField
+                    fullWidth
+                    label='Title'
+                    name='title'
+                    id='inp-title'
+                    margin='dense'
+                />
+                <TextField
+                    fullWidth
+                    required
+                    label='URL'
+                    name='url'
+                    id='inp-url'
+                    margin='dense'
+                />
+                <TextField
+                    fullWidth
+                    label='Description'
+                    name='description'
+                    id='inp-description'
+                    multiline
+                    rows={4}
+                    margin='dense'
+                />
+                <TextField
+                    fullWidth
+                    label='Tags'
+                    name='tags'
+                    id='inp-tags'
+                    margin='dense'
+                    multiline
+                    maxRows={4}
+                    value={tagsValue}
+                    onChange={handleChange}
+                    // onChange={(e) => {
+                    // console.log('77777777777')
+                    // this.setState({ shrink: e.target.value })
+                    // }}
+                    helperText='Some important text'
+                    InputLabelProps={{ shrink: tagsValue.value }}
+                    // onChange={() => {}}
+                />
+                <Tags setTagsValue={setTagsValue} />
+                <TextField
+                    fullWidth
+                    label='Previews'
+                    name='images'
+                    id='inp-images'
+                    margin='dense'
+                />
+                <Button
+                    variant='contained'
+                    endIcon={<SendIcon />}
+                    type='submit'
+                    sx={{ minWidth: '100%', mt: 1 }}
+                >
+                    Send
+                </Button>
             </form>
             {newLinks && (
-                <div>
-                    New Links:
+                <Alert severity='success' sx={{ mt: 2 }}>
+                    <Typography variant='h6'>New links added.</Typography>
                     {newLinks.map((item) => {
-                        return <div key={item._id}>{JSON.stringify(item)}</div>
+                        return <Link item={item} key={item._id} />
                     })}
-                </div>
+                </Alert>
             )}
-            {error && <p>Error: {error.message}</p>}
-            <Links key={Math.random()} />
-        </>
+            {error && (
+                <Alert severity='error' sx={{ mt: 2 }}>
+                    <Typography variant='h6'>Error while adding!</Typography>
+                    <Typography>{error.message}</Typography>
+                </Alert>
+            )}
+        </Paper>
     )
 }

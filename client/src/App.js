@@ -56,9 +56,9 @@ function App() {
                     <Routes>
                         <Route path='/' element={<Main />} />
                         <Route path='/search' element={<Search />} />
-                        <Route path='/new' element={<New />} />
+                        {/* <Route path='/new' element={<New />} /> */}
 
-                        <Route path='/tags' element={<Tags />} />
+                        <Route path='/tags' element={<Tags deletable />} />
                         <Route path='/tags/new' element={<TagsNew />} />
                         <Route path='/tags/:id' element={<Tags />} />
 

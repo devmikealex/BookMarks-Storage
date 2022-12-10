@@ -53,6 +53,15 @@ async function BDRequest(req, res, BD, mode) {
                     log.debug(clc.bold('BD.create \r\n') + c.brightBlue + a)
                 }
                 break
+            case 'delete':
+                log.verbs(c.brightYellow + 'Enter "delete" mode')
+                result = await BD.deleteOne(data)
+                log.debug(
+                    clc.bold('BD.delete \r\n') +
+                        c.brightBlue +
+                        JSON.stringify(result, null, 2)
+                )
+                break
             default:
                 break
         }

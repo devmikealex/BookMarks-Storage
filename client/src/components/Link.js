@@ -49,10 +49,13 @@ export default function Link(props) {
     }
 
     return (
-        <Paper variant='outlined' sx={{ m: 2 }}>
+        <Paper variant='outlined' sx={{ m: 2, boxShadow: 3 }}>
             <Box sx={{ p: 3 }}>
                 <LinkWithCount item={props.item} color='text.primary'>
-                    <Typography variant='h5'>{props.item.title}</Typography>
+                    <Typography variant='h5' component='span'>
+                        {props.item.title} (копировать)
+                    </Typography>
+                    <br />
                 </LinkWithCount>
                 <LinkWithCount item={props.item}>{props.item.url}</LinkWithCount>
                 <Typography variant='body2' color='lightgray'>
