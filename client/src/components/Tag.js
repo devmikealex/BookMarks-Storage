@@ -1,7 +1,7 @@
 import { Chip } from '@mui/material'
 import './Tag.css'
 
-import myFetch from '../common/fetch'
+import myFetch, { myFetch_new } from '../common/fetch'
 
 import WebLogger from 'mylogger/web-version'
 import { useState } from 'react'
@@ -9,6 +9,10 @@ const log = new WebLogger(null, 'TAG', 'white-Chocolate')
 
 export default function Tag(props) {
     // const {} = props
+    const [errorResult, setErrorResult] = useState({ error: null, json: null })
+
+    const [chosen, setChosen] = useState(false)
+    log.debug('Start chosen =', chosen)
     const [error, setError] = useState(null)
     log.debug('Start error =', error)
     // todo naming
@@ -24,6 +28,7 @@ export default function Tag(props) {
         if (a) {
             let newValue = a.value
             const newTag = e.target.textContent
+            setChosen(true)
             if (!newValue.includes(newTag)) {
                 if (newValue === '') newValue = newTag
                 else newValue += ', ' + newTag
@@ -37,18 +42,10 @@ export default function Tag(props) {
     function handleDelete(id) {
         log.verbs('--- Start function -handleDelete-')
         log.debug('Tag ID for delete =', id)
-        myFetch({ _id: id }, 'tags', 'DELETE').then((result) => {
+        myFetch_new({ _id: id }, 'tags', 'DELETE').then((result) => {
             log.debug('myFetch result', result)
-            const { errorFetch, resultJSON } = result
-            if (errorFetch) {
-                setError(resultJSON)
-                setNewLinks(null)
-            } else {
-                setError(null)
-                setNewLinks(resultJSON)
-            }
+            props.setForceRerender(id)
         })
-        props.setForceRerender(id)
     }
 
     // return <button onClick={handleClick}>{props.item.title}</button>
@@ -56,9 +53,11 @@ export default function Tag(props) {
         <Chip
             label={props.item.title}
             color='success'
+            variant={chosen ? 'outlined' : 'filled'}
+            clickable={!chosen}
             sx={{ m: 0.4 }}
             onClick={handleClick}
-            onDelete={props.deletable ? () => handleDelete(props.item._id) : false}
+            onDelete={props.deletable ? () => handleDelete(props.item._id) : null}
         />
     )
 }

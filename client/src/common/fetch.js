@@ -48,3 +48,50 @@ export default async function myFetch(obj, path = 'links', method = 'GET') {
     log.verbs('--- Exit function -myFetch-')
     return { errorFetch, resultJSON }
 }
+
+export async function myFetch_new(obj, path = 'links', method = 'GET') {
+    log.verbs('--- Start function -myFetch_new-')
+
+    const url = `${process.env.REACT_APP_SERVER}/${path}`
+    log.debug(`URL for fetch ${method} = ${url}`)
+    log.debug('Object for fetch', obj)
+
+    let errorFetch = false,
+        resultJSON
+
+    let body
+    if (method === 'GET') body = null
+    else body = JSON.stringify(obj)
+
+    try {
+        let response = await fetch(url, {
+            method: method,
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json;charset=utf-8',
+            },
+            body,
+        })
+        log.http('fetch status: ' + response.status)
+        log.http('fetch statusText: ' + response.statusText)
+        log.http('fetch ok: ' + response.ok)
+        errorFetch = !response.ok
+        resultJSON = await response.json()
+        log.debug('Response.json =', resultJSON)
+    } catch (error) {
+        errorFetch = true
+        log.error('fetch return error:', error)
+        resultJSON = error
+    }
+
+    let result
+    if (errorFetch) {
+        result = { error: resultJSON, json: null }
+    } else {
+        result = { error: null, json: resultJSON }
+    }
+
+    log.debug('Return =', result)
+    log.verbs('--- Exit function -myFetch_new-')
+    return result
+}

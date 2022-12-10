@@ -1,90 +1,72 @@
-import { Alert, Button, Paper, TextField, Typography } from '@mui/material'
+import AlertInfo from '../components/AlertInfo'
+import WebLogger from 'mylogger/web-version'
+import { myFetch_new } from '../common/fetch'
+
+import { Box, Button, Paper, TextField, Typography } from '@mui/material'
 import SendIcon from '@mui/icons-material/Send'
 
-import WebLogger from 'mylogger/web-version'
 import { useRef, useState } from 'react'
-import myFetch from '../common/fetch'
-import Tags from './Tags'
-import Tag from '../components/Tag'
+
 const log = new WebLogger(null, 'TAGSNEW', 'green')
 
 export default function TagsNew(props) {
     log.verbs('--- Start function TagsNew')
-
     const myInputRef = useRef()
-
-    const [error, setError] = useState(null)
-    log.debug('Start error =', error)
-    const [newTag, setNewTag] = useState(null)
-    log.debug('Start tags =', newTag)
-
+    const [errorResult, setErrorResult] = useState({ error: null, json: null })
+    log.debug('Start errorResult =', errorResult)
     log.verbs('--- Start Render TagsNew')
 
-    return (
-        <Paper variant='outlined' sx={{ m: 2, boxShadow: 3, p: 3 }}>
-            <Typography variant='h3'>Create a new tag</Typography>
+    log.debug('props.wrapper =', props.wrapper)
+    const wrapper = props.wrapper ?? false
+    log.debug('wrapper =', wrapper)
 
-            <form>
-                <TextField
-                    fullWidth
-                    required
-                    label='tag'
-                    name='tag'
-                    id='inp-tag'
-                    margin='dense'
-                    inputRef={myInputRef}
-                />
-                {/* <label>
-                    New tag:
-                    <input type='text' ref={inputRef} placeholder='title' />
-                </label> */}
-                <Button
-                    variant='contained'
-                    endIcon={<SendIcon />}
-                    // type='submit'
-                    sx={{ minWidth: '100%', mt: 1 }}
-                    onClick={Send}
-                >
-                    Send
-                </Button>
-                {/* <input type='button' value='Add' onClick={Send} /> */}
-            </form>
-            {newTag && (
-                <Alert severity='success' sx={{ mt: 2 }}>
-                    <Typography variant='h6'>New tag added.</Typography>
-                    {/* // todo */}
-                    <Tag item={newTag[0]} />
-                </Alert>
-            )}
-            {error && (
-                <Alert severity='error' sx={{ mt: 2 }}>
-                    <Typography variant='h6'>Error while adding!</Typography>
-                    <Typography>{error.message}</Typography>
-                </Alert>
-            )}
-            {/* {newTag && <p>New Tag: {JSON.stringify(newTag)}</p>} */}
-            {/* {error && <p>Error: {error.message}</p>} */}
-            {/* <Tags key={Math.random()} /> */}
-        </Paper>
+    const main = (
+        <>
+            <div>
+                <Box sx={{ display: 'flex', gap: 1 }}>
+                    <TextField
+                        // fullWidth
+                        required
+                        label='Tag'
+                        name='tag'
+                        id='inp-tag'
+                        // margin='dense'
+                        inputRef={myInputRef}
+                        sx={{ width: '100%' }}
+                    />
+                    <Button
+                        variant='contained'
+                        endIcon={<SendIcon />}
+                        // sx={{ minWidth: '100%', mt: 1 }}
+                        sx={{ flexShrink: 0 }}
+                        onClick={Send}
+                    >
+                        New Tag
+                    </Button>
+                </Box>
+            </div>
+            <AlertInfo errorResult={errorResult} />
+        </>
     )
+    if (wrapper) {
+        return (
+            <Paper variant='outlined' sx={{ m: 2, boxShadow: 3, p: 3 }}>
+                <Typography variant='h3'>Create a new tag</Typography>
+                {main}
+            </Paper>
+        )
+    } else {
+        return <div>{main}</div>
+    }
 
     async function Send() {
         log.verbs('--- Start function Send')
-        console.log(myInputRef)
-
         const newTag = [{ title: myInputRef.current.value }]
-        myFetch(newTag, 'tags', 'POST').then((result) => {
+        myFetch_new(newTag, 'tags', 'POST').then((result) => {
             log.debug('myFetch result', result)
-            const { errorFetch, resultJSON } = result
-            if (errorFetch) {
-                setError(resultJSON)
-                setNewTag(null)
-            } else {
-                setError(null)
-                setNewTag(resultJSON)
-            }
+            setErrorResult(result)
+            props.setForceRerender(myInputRef.current.value)
         })
-        props.setForceRerender(myInputRef.current.value)
         log.verbs('--- Exit function Send')
     }
 }

@@ -59,7 +59,7 @@ function App() {
                         {/* <Route path='/new' element={<New />} /> */}
 
                         <Route path='/tags' element={<Tags deletable />} />
-                        <Route path='/tags/new' element={<TagsNew />} />
+                        <Route path='/tags/new' element={<TagsNew wrapper />} />
                         <Route path='/tags/:id' element={<Tags />} />
 
                         <Route path='/links' element={<NavbarLay />}>

@@ -113,10 +113,10 @@ export default function Appbar(props) {
                         <AddIcon />
                         Link
                     </Button>
-                    <Button component={RRLink} to='/tags/new' color='inherit'>
+                    {/* <Button component={RRLink} to='/tags/new' color='inherit'>
                         <AddIcon />
                         Tag
-                    </Button>
+                    </Button> */}
                     <Button component={RRLink} to='/links' color='inherit'>
                         <DatasetLinkedOutlinedIcon fontSize='small' sx={{ mr: 0.5 }} />
                         Links
