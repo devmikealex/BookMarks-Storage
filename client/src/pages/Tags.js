@@ -4,13 +4,23 @@ import { useEffect, useState } from 'react'
 import { myFetch_new } from '../common/fetch'
 import Tag from '../components/Tag'
 import TagsNew from './TagsNew'
-import { Box, Paper } from '@mui/material'
+import { Box, Paper, Snackbar } from '@mui/material'
 
 import WebLogger from 'mylogger/web-version'
+import AlertInfo from '../components/AlertInfo'
 const log = new WebLogger(null, 'TAGS', 'blue')
 
 export default function Tags(props) {
     log.verbs('--- Start function Tags')
+
+    const [snackbar, setSnackbar] = useState({ message: '', open: false })
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return
+        }
+        setSnackbar('', false)
+    }
 
     const [forceRerender, setForceRerender] = useState(true)
     log.silly('Start forceRerender =', forceRerender)
@@ -56,12 +66,19 @@ export default function Tags(props) {
                                 setTagsValue={props.setTagsValue}
                                 deletable={deletable}
                                 setForceRerender={setForceRerender}
+                                setSnackbar={setSnackbar}
                             />
                         )
                     })}
                 </Box>
             )}
             {/* {error && <p>Error: {error.message}</p>} */}
+            <Snackbar
+                open={snackbar.open}
+                autoHideDuration={6000}
+                onClose={handleClose}
+                message={snackbar.message}
+            />
         </Paper>
     )
 }

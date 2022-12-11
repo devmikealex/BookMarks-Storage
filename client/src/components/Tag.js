@@ -45,6 +45,7 @@ export default function Tag(props) {
         myFetch_new({ _id: id }, 'tags', 'DELETE').then((result) => {
             log.debug('myFetch result', result)
             props.setForceRerender(id)
+            props.setSnackbar({ message: JSON.stringify(result.json), open: true })
         })
     }
 

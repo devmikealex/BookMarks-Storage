@@ -45,7 +45,7 @@ export default function TagsNew(props) {
                     </Button>
                 </Box>
             </div>
-            <AlertInfo errorResult={errorResult} />
+            <AlertInfo errorResult={errorResult} goodMessage='New tag added.' />
         </>
     )
     if (wrapper) {
