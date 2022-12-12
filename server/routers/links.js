@@ -44,6 +44,11 @@ router.get('/countinc/:id', (req, res) => {
     )
 })
 
-router.post('/filters', (req, res) => findTagsByFilters(req, res, Link))
+router.get('/:id', (req, res) => {
+    log.debug(clc.cyan('ID processing, req.params ='), req.params)
+    BDRequest(req, res, Link, 'find')
+})
+
+// router.post('/filters', (req, res) => findTagsByFilters(req, res, Link))
 
 module.exports = router

@@ -5,7 +5,7 @@ import myFetch, { myFetch_new } from '../common/fetch'
 
 import WebLogger from 'mylogger/web-version'
 import { useState } from 'react'
-const log = new WebLogger(null, 'TAG', 'white-Chocolate')
+const log = new WebLogger('error', 'TAG', 'white-Chocolate')
 
 export default function Tag(props) {
     // const {} = props

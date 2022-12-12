@@ -1,7 +1,7 @@
 import { Alert, Button, Paper, TextField, Typography } from '@mui/material'
 import SendIcon from '@mui/icons-material/Send'
 
-import myFetch from '../common/fetch'
+import myFetch, { myFetch_new } from '../common/fetch'
 import WebLogger from 'mylogger/web-version'
 import Tags from './Tags'
 import UploadFiles, { submitFiles } from './UploadFiles'
@@ -11,6 +11,10 @@ const log = new WebLogger(null, 'LinksNEW', 'magenta')
 
 export default function LinksNew() {
     log.verbs('--- Start function -LinksNew-')
+
+    // const [errorResult, setErrorResult] = useState({ error: null, json: null })
+    // log.debug('Start errorResult =', errorResult)
+    // const newLinks = errorResult.json
 
     const [error, setError] = useState(null)
     log.debug('Start error =', error)
@@ -29,6 +33,10 @@ export default function LinksNew() {
         const res = await myFetch(null, 'tags', 'GET')
         log.debug('---------myFetch result', res)
         const { errorFetch, resultJSON: tags } = res
+        // const { error: errorFetch, json: tags } = res
+        // setErrorResult(res)
+        // const tags = res.json
+
         if (errorFetch) {
             setError(tags)
             return
@@ -37,13 +45,17 @@ export default function LinksNew() {
         }
         log.silly('tags', tags)
 
-        const tagsName = e.target.tags.value.split(', ')
-        log.debug('tagsName', tagsName)
-
-        const tagsID = tagsName.map((item) => {
-            const tag = tags.find((element) => element.title === item)
-            return tag._id
-        })
+        let tagsID
+        if (e.target.tags.value.trim() !== '') {
+            const tagsName = e.target.tags.value.split(', ')
+            log.debug('tagsName', tagsName)
+            tagsID = tagsName.map((item) => {
+                const tag = tags.find((element) => element.title === item)
+                return tag._id
+            })
+        } else {
+            tagsID = []
+        }
         log.debug('tagsID', tagsID)
 
         const images = submitFiles()
@@ -58,6 +70,7 @@ export default function LinksNew() {
         }
         myFetch([newLink], 'links', 'POST').then((result) => {
             log.debug('myFetch result', result)
+            // setErrorResult(result)
             const { errorFetch, resultJSON } = result
             if (errorFetch) {
                 setError(resultJSON)
@@ -145,7 +158,7 @@ export default function LinksNew() {
             {error && (
                 <Alert severity='error' sx={{ mt: 2 }}>
                     <Typography variant='h6'>Error while adding!</Typography>
-                    <Typography>{error.message}</Typography>
+                    <Typography>{error}</Typography>
                 </Alert>
             )}
         </Paper>

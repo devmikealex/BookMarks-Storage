@@ -8,6 +8,8 @@ import './Link.css'
 import { Box } from '@mui/system'
 import Ahref from '@mui/material/Link'
 
+import { Link as RRLink } from 'react-router-dom'
+
 const PATH_TO_PREVIEW = process.env.REACT_APP_SERVER + '/static/images/'
 
 const log = new WebLogger(null, 'LINK', 'red')
@@ -58,8 +60,15 @@ export default function Link(props) {
                     <br />
                 </LinkWithCount>
                 <LinkWithCount item={props.item}>{props.item.url}</LinkWithCount>
-                <Typography variant='body2' color='lightgray'>
-                    {props.item._id}
+                <Typography variant='body2'>
+                    <Ahref
+                        to={'/links/' + props.item._id}
+                        underline='hover'
+                        component={RRLink}
+                        color='lightgray'
+                    >
+                        {props.item._id}
+                    </Ahref>
                 </Typography>
                 <Box>
                     {props.item.tags.map((item) => {

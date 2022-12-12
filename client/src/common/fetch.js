@@ -53,11 +53,12 @@ export async function myFetch_new(obj, path = 'links', method = 'GET') {
     log.verbs('--- Start function -myFetch_new-')
 
     const url = `${process.env.REACT_APP_SERVER}/${path}`
-    log.debug(`URL for fetch ${method} = ${url}`)
+    log.debug(`URL for fetch ${method} ${url}`)
     log.debug('Object for fetch', obj)
 
     let errorFetch = false,
-        resultJSON
+        resultJSON,
+        statusText
 
     let body
     if (method === 'GET') body = null
@@ -73,7 +74,8 @@ export async function myFetch_new(obj, path = 'links', method = 'GET') {
             body,
         })
         log.http('fetch status: ' + response.status)
-        log.http('fetch statusText: ' + response.statusText)
+        statusText = response.statusText
+        log.http('fetch statusText: ' + statusText)
         log.http('fetch ok: ' + response.ok)
         errorFetch = !response.ok
         resultJSON = await response.json()
@@ -81,7 +83,7 @@ export async function myFetch_new(obj, path = 'links', method = 'GET') {
     } catch (error) {
         errorFetch = true
         log.error('fetch return error:', error)
-        resultJSON = error
+        resultJSON = statusText + ' / ' + error.message
     }
 
     let result

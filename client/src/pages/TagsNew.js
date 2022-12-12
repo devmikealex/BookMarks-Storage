@@ -3,7 +3,6 @@ import WebLogger from 'mylogger/web-version'
 import { myFetch_new } from '../common/fetch'
 
 import { Box, Button, Paper, TextField, Typography } from '@mui/material'
-import SendIcon from '@mui/icons-material/Send'
 import AddIcon from '@mui/icons-material/Add'
 
 import { useRef, useState } from 'react'
@@ -15,7 +14,7 @@ export default function TagsNew(props) {
     const myInputRef = useRef()
     const [errorResult, setErrorResult] = useState({ error: null, json: null })
     log.debug('Start errorResult =', errorResult)
-    log.verbs('--- Start Render TagsNew')
+    // log.verbs('--- Start Render TagsNew')
 
     log.debug('props.wrapper =', props.wrapper)
     const wrapper = props.wrapper ?? false
