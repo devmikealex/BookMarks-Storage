@@ -4,6 +4,7 @@ import { myFetch_new } from '../common/fetch'
 
 import { Box, Button, Paper, TextField, Typography } from '@mui/material'
 import SendIcon from '@mui/icons-material/Send'
+import AddIcon from '@mui/icons-material/Add'
 
 import { useRef, useState } from 'react'
 
@@ -26,7 +27,7 @@ export default function TagsNew(props) {
                 <Box sx={{ display: 'flex', gap: 1 }}>
                     <TextField
                         // fullWidth
-                        required
+                        // required
                         label='Tag'
                         name='tag'
                         id='inp-tag'
@@ -36,7 +37,7 @@ export default function TagsNew(props) {
                     />
                     <Button
                         variant='contained'
-                        endIcon={<SendIcon />}
+                        endIcon={<AddIcon />}
                         // sx={{ minWidth: '100%', mt: 1 }}
                         sx={{ flexShrink: 0 }}
                         onClick={Send}

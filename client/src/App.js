@@ -19,8 +19,8 @@ import LinksNew from './pages/LinksNew'
 import Appbar from './components/Appbar'
 import { Container, createTheme, CssBaseline, ThemeProvider } from '@mui/material'
 import { useState } from 'react'
-import Upload from './pages/Upload'
-import Upload2 from './pages/Upload2'
+import UploadFiles from './pages/UploadFiles'
+// import Upload-test from './pages/Upload-test'
 
 const log = new WebLogger(null, ' APP', 'white-Coral')
 
@@ -58,8 +58,8 @@ function App() {
                     <Routes>
                         <Route path='/' element={<Main />} />
                         <Route path='/search' element={<Search />} />
-                        <Route path='/upload' element={<Upload />} />
-                        <Route path='/upload2' element={<Upload2 />} />
+                        <Route path='/upload' element={<UploadFiles />} />
+                        {/* <Route path='/upload2' element={<Upload-test />} /> */}
                         {/* <Route path='/new' element={<New />} /> */}
 
                         <Route path='/tags' element={<Tags deletable />} />

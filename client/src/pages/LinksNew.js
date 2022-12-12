@@ -4,6 +4,7 @@ import SendIcon from '@mui/icons-material/Send'
 import myFetch from '../common/fetch'
 import WebLogger from 'mylogger/web-version'
 import Tags from './Tags'
+import UploadFiles, { submitFiles } from './UploadFiles'
 import { useState } from 'react'
 import Link from '../components/Link'
 const log = new WebLogger(null, 'LinksNEW', 'magenta')
@@ -45,12 +46,15 @@ export default function LinksNew() {
         })
         log.debug('tagsID', tagsID)
 
+        const images = submitFiles()
+
         const newLink = {
             title: e.target.title.value,
             url: e.target.url.value,
             description: e.target.description.value,
             tags: tagsID,
-            images: e.target.images.value.split(', '),
+            // images: e.target.images.value.split(', '),
+            images: images,
         }
         myFetch([newLink], 'links', 'POST').then((result) => {
             log.debug('myFetch result', result)
@@ -68,7 +72,7 @@ export default function LinksNew() {
     log.verbs('--- Start Render -LinksNew-')
     return (
         <Paper variant='outlined' sx={{ m: 2, boxShadow: 3, p: 3 }}>
-            <Typography variant='h3'>Create a new link</Typography>
+            <Typography variant='h4'>Create a new link</Typography>
             <form onSubmit={Send}>
                 <TextField
                     fullWidth
@@ -91,7 +95,7 @@ export default function LinksNew() {
                     name='description'
                     id='inp-description'
                     multiline
-                    rows={4}
+                    rows={2}
                     margin='dense'
                 />
                 <TextField
@@ -108,18 +112,19 @@ export default function LinksNew() {
                     // console.log('77777777777')
                     // this.setState({ shrink: e.target.value })
                     // }}
-                    helperText='Some important text'
+                    // helperText='Some important text'
                     InputLabelProps={{ shrink: tagsValue.value }}
                     // onChange={() => {}}
                 />
                 <Tags setTagsValue={setTagsValue} />
-                <TextField
+                {/* <TextField
                     fullWidth
                     label='Previews'
                     name='images'
                     id='inp-images'
                     margin='dense'
-                />
+                /> */}
+                <UploadFiles />
                 <Button
                     variant='contained'
                     endIcon={<SendIcon />}
