@@ -10,6 +10,18 @@ const cors = require('cors')
 const linksRouter = require('./routers/links')
 const tagsRouter = require('./routers/tags')
 
+const multer = require('multer')
+// const upload = multer({ dest: './public/images/' })
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, './public/images/')
+    },
+    filename: function (req, file, cb) {
+        cb(null, Buffer.from(file.originalname, 'latin1').toString('utf8'))
+    },
+})
+const upload2 = multer({ storage: storage })
+
 const clc = require('cli-color')
 
 const BD_NAME = 'test'
@@ -48,6 +60,14 @@ app.use((req, res, next) => {
 
 app.use('/tags', tagsRouter)
 app.use('/links', linksRouter)
+app.use('/uploadfile', upload2.any(), function (req, res, next) {
+    for (const file of req.files) {
+        file.originalname = Buffer.from(file.originalname, 'latin1').toString('utf8')
+    }
+    log.debug('Files for UPLOAD' + c.brightBlue, req.files)
+    // console.log('body', req.body)
+    res.json(req.files)
+})
 
 // app.get('/', function (req, res) {
 //     res.send('Main page WIP')

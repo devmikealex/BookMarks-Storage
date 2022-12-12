@@ -1,5 +1,9 @@
 [
     {
+        "title": "Upload",
+        "link": "/upload"
+    },
+    {
         "title": "Search",
         "link": "/search"
     }
