@@ -12,14 +12,14 @@ const log = new WebLogger(null, 'LinksNEW', 'magenta')
 export default function LinksNew() {
     log.verbs('--- Start function -LinksNew-')
 
-    // const [errorResult, setErrorResult] = useState({ error: null, json: null })
-    // log.debug('Start errorResult =', errorResult)
-    // const newLinks = errorResult.json
+    const [errorResult, setErrorResult] = useState({ error: null, json: null })
+    log.debug('Start errorResult =', errorResult)
+    const newLinks = errorResult.json
 
-    const [error, setError] = useState(null)
-    log.debug('Start error =', error)
-    const [newLinks, setNewLinks] = useState(null)
-    log.debug('Start newLinks =', newLinks)
+    // const [error, setError] = useState(null)
+    // log.debug('Start error =', error)
+    // const [newLinks, setNewLinks] = useState(null)
+    // log.debug('Start newLinks =', newLinks)
 
     const [tagsValue, setTagsValue] = useState('')
     const handleChange = (event) => {
@@ -30,18 +30,21 @@ export default function LinksNew() {
         log.verbs('--- Start function -Send-')
         e.preventDefault()
 
-        const res = await myFetch(null, 'tags', 'GET')
+        const res = await myFetch_new(null, 'tags', 'GET')
         log.debug('---------myFetch result', res)
-        const { errorFetch, resultJSON: tags } = res
+        // const { errorFetch, resultJSON: tags } = res
         // const { error: errorFetch, json: tags } = res
         // setErrorResult(res)
-        // const tags = res.json
+        const tags = res.json
+        const errorFetch = res.error
 
         if (errorFetch) {
-            setError(tags)
+            log.error('Error errorFetch for GET tags', res)
+            // setError(tags)
+            setErrorResult(...errorResult, errorFetch)
             return
         } else {
-            setError(null)
+            // setError(null)
         }
         log.silly('tags', tags)
 
@@ -68,17 +71,17 @@ export default function LinksNew() {
             // images: e.target.images.value.split(', '),
             images: images,
         }
-        myFetch([newLink], 'links', 'POST').then((result) => {
+        myFetch_new([newLink], 'links', 'POST').then((result) => {
             log.debug('myFetch result', result)
-            // setErrorResult(result)
-            const { errorFetch, resultJSON } = result
-            if (errorFetch) {
-                setError(resultJSON)
-                setNewLinks(null)
-            } else {
-                setError(null)
-                setNewLinks(resultJSON)
-            }
+            setErrorResult(result)
+            // const { errorFetch, resultJSON } = result
+            // if (errorFetch) {
+            //     setError(resultJSON)
+            //     setNewLinks(null)
+            // } else {
+            //     setError(null)
+            //     setNewLinks(resultJSON)
+            // }
         })
         log.verbs('--- Exit function -Send-')
     }
@@ -155,10 +158,10 @@ export default function LinksNew() {
                     })}
                 </Alert>
             )}
-            {error && (
+            {errorResult.error && (
                 <Alert severity='error' sx={{ mt: 2 }}>
                     <Typography variant='h6'>Error while adding!</Typography>
-                    <Typography>{error}</Typography>
+                    <Typography>{errorResult.error}</Typography>
                 </Alert>
             )}
         </Paper>

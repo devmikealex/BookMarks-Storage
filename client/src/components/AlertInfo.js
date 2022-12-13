@@ -14,7 +14,7 @@ export default function AlertInfo({ errorResult, goodMessage, children }) {
             )}
             {errorResult.error && (
                 <AlertMy label='Error while processing!' severity='error'>
-                    <Typography>{errorResult.error.message}</Typography>
+                    <Typography>{errorResult.error}</Typography>
                 </AlertMy>
             )}
         </div>

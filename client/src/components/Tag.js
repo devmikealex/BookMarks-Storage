@@ -1,7 +1,7 @@
 import { Chip } from '@mui/material'
 import './Tag.css'
 
-import myFetch, { myFetch_new } from '../common/fetch'
+import { myFetch_new } from '../common/fetch'
 
 import WebLogger from 'mylogger/web-version'
 import { useState } from 'react'
@@ -9,15 +9,15 @@ const log = new WebLogger('error', 'TAG', 'white-Chocolate')
 
 export default function Tag(props) {
     // const {} = props
-    const [errorResult, setErrorResult] = useState({ error: null, json: null })
+    // const [errorResult, setErrorResult] = useState({ error: null, json: null })
 
     const [chosen, setChosen] = useState(false)
     log.debug('Start chosen =', chosen)
-    const [error, setError] = useState(null)
-    log.debug('Start error =', error)
+    // const [error, setError] = useState(null)
+    // log.debug('Start error =', error)
     // todo naming
-    const [newLinks, setNewLinks] = useState(null)
-    log.debug('Start newLinks =', newLinks)
+    // const [newLinks, setNewLinks] = useState(null)
+    // log.debug('Start newLinks =', newLinks)
 
     function handleClick(e) {
         // e.preventDefault()
@@ -32,10 +32,11 @@ export default function Tag(props) {
             if (!newValue.includes(newTag)) {
                 if (newValue === '') newValue = newTag
                 else newValue += ', ' + newTag
-                console.log('newValue:', newValue)
-                console.log('props:', props)
                 props.setTagsValue(newValue)
             }
+        } else {
+            // goto links/filters/ POST with props.item._id in tags array
+            console.log('goto filter ' + props.item._id)
         }
     }
 

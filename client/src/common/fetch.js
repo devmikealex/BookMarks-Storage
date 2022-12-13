@@ -78,7 +78,12 @@ export async function myFetch_new(obj, path = 'links', method = 'GET') {
         log.http('fetch statusText: ' + statusText)
         log.http('fetch ok: ' + response.ok)
         errorFetch = !response.ok
-        resultJSON = await response.json()
+        if (errorFetch) {
+            const err = await response.json()
+            resultJSON = statusText + ' / ' + err.message
+        } else {
+            resultJSON = await response.json()
+        }
         log.debug('Response.json =', resultJSON)
     } catch (error) {
         errorFetch = true
