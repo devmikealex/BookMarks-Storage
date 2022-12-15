@@ -45,14 +45,33 @@ export default function Upload() {
     const rows = []
     for (let i = 1; i <= uploadsNum; i++) {
         rows.push(
-            <TextField
-                id={INPUT_NAME + i}
-                name={'upload' + i}
-                type='file'
-                key={i}
-                sx={{ width: '100%' }}
-            />
+            <div key={i}>
+                <TextField
+                    id={INPUT_NAME + i}
+                    name={'upload' + i}
+                    onChange={changeImage}
+                    type='file'
+                    inputProps={{ accept: 'image/*' }}
+                    sx={{ width: '100%', pb: 1 }}
+                />
+                <img
+                    hidden
+                    id={'img-' + INPUT_NAME + i}
+                    height='200px'
+                    src='#'
+                    alt='preview'
+                />
+            </div>
         )
+    }
+
+    function changeImage(e) {
+        const file = e.target.files[0]
+        const img = document.getElementById('img-' + e.target.id)
+        if (file) {
+            img.src = URL.createObjectURL(file)
+            img.removeAttribute('hidden')
+        }
     }
 
     function changeInputNum(e, mode) {

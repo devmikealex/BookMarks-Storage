@@ -84,6 +84,7 @@ function App() {
                                 <Route index element={<Links />} />
                                 <Route path='new' element={<LinksNew />} />
                                 <Route path=':id' element={<Links />} />
+                                <Route path='edit/:id' element={<Links />} />
                             </Route>
 
                             <Route path='*' element={<NotFound />} />
