@@ -45,6 +45,7 @@ router.get('/countinc/:id', (req, res) => {
 })
 
 // router.post('/filters', (req, res) => findTagsByFilters(req, res, Link))
+router.post('/filters', (req, res) => BDRequest(req, res, Link, 'find'))
 
 router.get('/tag/:id', (req, res) => {
     async function ttt() {

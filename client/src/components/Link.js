@@ -9,6 +9,7 @@ import { Box } from '@mui/system'
 import Ahref from '@mui/material/Link'
 
 import { Link as RRLink } from 'react-router-dom'
+import Tag from './Tag'
 
 const PATH_TO_PREVIEW = process.env.REACT_APP_SERVER + '/static/images/'
 
@@ -72,7 +73,8 @@ export default function Link(props) {
                 </Typography>
                 <Box>
                     {props.item.tags.map((item) => {
-                        return <Chip label={item.title} key={item._id} />
+                        // return <Chip label={item.title} key={item._id} />
+                        return <Tag item={item} key={item._id} />
                     })}
                 </Box>
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
