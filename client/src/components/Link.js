@@ -89,7 +89,14 @@ export default function Link(props) {
                 <Typography>{props.item.description}</Typography>
                 {props.item.images.map((item) => {
                     return (
-                        <img src={PATH_TO_PREVIEW + item} width='200' alt='' key={item} />
+                        <img
+                            src={PATH_TO_PREVIEW + item}
+                            width='300px'
+                            height='200px'
+                            alt='preview'
+                            key={item}
+                            style={{ objectFit: 'cover', marginRight: '4px' }}
+                        />
                     )
                 })}
             </Box>

@@ -31,19 +31,27 @@ export default function Tag(props) {
         if (a) {
             let newValue = a.value
             const newTag = e.target.textContent
-            setChosen(true)
-            if (!newValue.includes(newTag)) {
-                if (newValue === '') newValue = newTag
-                else newValue += ', ' + newTag
-                props.setTagsValue(newValue)
+            let arr = newValue.split(', ')
+            if (newValue.includes(newTag)) {
+                setChosen(false)
+                const index = arr.indexOf(newTag)
+                if (index > -1) {
+                    arr.splice(index, 1)
+                }
+            } else {
+                setChosen(true)
+                if (!arr[0]) arr = []
+                arr.push(newTag)
             }
+            newValue = arr.join(', ')
+            props.setTagsValue(newValue)
         } else {
             // goto links/filters/ POST with props.item._id in tags array
             // http://localhost:3018/links/tag/636fba92ba9e176e0e2f9fad
             console.log(`goto filter - ${e.target.textContent} - ${props.item._id}`)
             // redirect('/links/tag/' + props.item._id)
 
-            navigate('/links?tag=' + e.target.textContent)
+            navigate('/links?tag=' + e.target.textContent, { state: props.item })
             // navigate('/links?tag=' + props.item._id)
         }
     }
@@ -64,7 +72,7 @@ export default function Tag(props) {
             label={props.item.title}
             color='success'
             variant={chosen ? 'outlined' : 'filled'}
-            clickable={!chosen}
+            // clickable={!chosen}
             sx={{ m: 0.4 }}
             onClick={handleClick}
             onDelete={props.deletable ? () => handleDelete(props.item._id) : null}

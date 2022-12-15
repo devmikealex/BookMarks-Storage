@@ -1,4 +1,4 @@
-import { useParams, useSearchParams } from 'react-router-dom'
+import { useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { useContext, useEffect, useState } from 'react'
 
 import WebLogger from 'mylogger/web-version'
@@ -11,6 +11,9 @@ export default function Links() {
     log.verbs('--- Start function -Links-')
 
     const { toLog } = useContext(Context)
+
+    const locat = useLocation()
+    log.debug('Location.state =', locat.state)
 
     const [params, setParams] = useSearchParams({})
     const currentTag = params.get('tag')
@@ -25,16 +28,21 @@ export default function Links() {
     const { error, json: links } = errorResult
 
     useEffect(() => {
-        log.verbs('Enter to useEffect[id]')
+        log.verbs('Enter to useEffect[id, currentTag]')
 
         async function ttt() {
             let obj = {},
                 metod = 'GET',
-                url = 'links/' + (id ?? '')
+                url = 'links/' + (id ?? ''),
+                tagID
             if (currentTag) {
                 url = 'links/filters/'
                 metod = 'POST'
-                const tagID = await getTagIDforName(currentTag)
+                if (locat.state) {
+                    tagID = locat.state._id
+                } else {
+                    tagID = await getTagIDforName(currentTag)
+                }
                 obj = { tags: tagID }
             }
             // myFetch_new(obj, url, metod).then((result) => {

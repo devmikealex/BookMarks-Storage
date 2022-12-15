@@ -1,4 +1,4 @@
-import { Button, TextField, Typography } from '@mui/material'
+import { Box, Button, Paper, TextField, Typography } from '@mui/material'
 import WebLogger from 'mylogger/web-version'
 import { useState } from 'react'
 
@@ -45,14 +45,47 @@ export default function Upload() {
     const rows = []
     for (let i = 1; i <= uploadsNum; i++) {
         rows.push(
-            <div key={i}>
+            <Paper
+                elevation={0}
+                variant='outlined'
+                key={i}
+                sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    p: 0.6,
+                    mb: 0.6,
+                }}
+                style={
+                    {
+                        // display: 'flex',
+                        // alignItems: 'center',
+                        //     border: '1px solid Silver ',
+                        // padding: '4px',
+                        //     margin: '4px',
+                    }
+                }
+            >
                 <TextField
+                    sizeSmall
                     id={INPUT_NAME + i}
                     name={'upload' + i}
                     onChange={changeImage}
                     type='file'
                     inputProps={{ accept: 'image/*' }}
-                    sx={{ width: '100%', pb: 1 }}
+                    sx={{
+                        width: '100%',
+                        '& .MuiOutlinedInput-input': {
+                            padding: '6px',
+                        },
+                        '& .MuiOutlinedInput-input:hover': {
+                            backgroundColor: 'AliceBlue',
+                        },
+                        '& .MuiOutlinedInput-root': {
+                            '& > fieldset': {
+                                border: 'none',
+                            },
+                        },
+                    }}
                 />
                 <img
                     hidden
@@ -60,8 +93,9 @@ export default function Upload() {
                     height='200px'
                     src='#'
                     alt='preview'
+                    style={{ marginLeft: '4px' }}
                 />
-            </div>
+            </Paper>
         )
     }
 

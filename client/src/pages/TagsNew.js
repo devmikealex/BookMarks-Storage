@@ -25,6 +25,7 @@ export default function TagsNew(props) {
             <div>
                 <Box sx={{ display: 'flex', gap: 1 }}>
                     <TextField
+                        size='small'
                         // fullWidth
                         // required
                         label='Tag'

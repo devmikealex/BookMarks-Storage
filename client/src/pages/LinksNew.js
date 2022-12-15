@@ -97,6 +97,7 @@ export default function LinksNew() {
             <Typography variant='h4'>Create a new link</Typography>
             <form onSubmit={Send}>
                 <TextField
+                    size='small'
                     fullWidth
                     label='Title'
                     name='title'
@@ -104,6 +105,7 @@ export default function LinksNew() {
                     margin='dense'
                 />
                 <TextField
+                    size='small'
                     fullWidth
                     required
                     label='URL'
@@ -112,6 +114,7 @@ export default function LinksNew() {
                     margin='dense'
                 />
                 <TextField
+                    size='small'
                     fullWidth
                     label='Description'
                     name='description'
@@ -121,6 +124,7 @@ export default function LinksNew() {
                     margin='dense'
                 />
                 <TextField
+                    size='small'
                     fullWidth
                     label='Tags'
                     name='tags'
