@@ -80,14 +80,15 @@ export async function myFetch_new(obj, path = 'links', method = 'GET') {
         errorFetch = !response.ok
         if (errorFetch) {
             const err = await response.json()
-            resultJSON = statusText + ' / ' + err.message
+            throw err
+            // resultJSON = statusText + ' / ' + err.message
         } else {
             resultJSON = await response.json()
         }
         log.debug('Response.json =', resultJSON)
     } catch (error) {
         errorFetch = true
-        log.error('fetch return error:', error)
+        log.error('fetch catch error:', error)
         resultJSON = statusText + ' / ' + error.message
     }
 

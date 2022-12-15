@@ -5,6 +5,7 @@ import { myFetch_new } from '../common/fetch'
 
 import WebLogger from 'mylogger/web-version'
 import { useState } from 'react'
+import { redirect } from 'react-router-dom'
 const log = new WebLogger('error', 'TAG', 'white-Chocolate')
 
 export default function Tag(props) {
@@ -36,7 +37,9 @@ export default function Tag(props) {
             }
         } else {
             // goto links/filters/ POST with props.item._id in tags array
+            // http://localhost:3018/links/tag/636fba92ba9e176e0e2f9fad
             console.log('goto filter ' + props.item._id)
+            redirect('/links/tag/' + props.item._id)
         }
     }
 

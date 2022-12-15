@@ -22,6 +22,9 @@ export default function Navbar() {
                     </Link>
                 </li>
                 <li>
+                    <Link to='/links/123'>Link id 123</Link>
+                </li>
+                <li>
                     <a href={`${process.env.REACT_APP_SERVER}/tags/createTestTags`}>
                         createTestTags
                     </a>

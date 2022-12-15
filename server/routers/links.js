@@ -44,11 +44,31 @@ router.get('/countinc/:id', (req, res) => {
     )
 })
 
+// router.post('/filters', (req, res) => findTagsByFilters(req, res, Link))
+
+router.get('/tag/:id', (req, res) => {
+    async function ttt() {
+        let data
+        try {
+            // contains only tags where tagName is 'YouTube' or 'politics'
+            // data = await Link.find().populate({
+            //     path: 'tags',
+            //     match: { title: { $in: ['YouTube', 'politics'] } },
+            // })
+
+            data = await Link.find({ tags: req.params.id }).populate('tags')
+            console.log('DATA', data)
+        } catch (err) {
+            console.log(err)
+        }
+        res.json(data)
+    }
+    ttt()
+})
+
 router.get('/:id', (req, res) => {
     log.debug(clc.cyan('ID processing, req.params ='), req.params)
     BDRequest(req, res, Link, 'find')
 })
-
-// router.post('/filters', (req, res) => findTagsByFilters(req, res, Link))
 
 module.exports = router

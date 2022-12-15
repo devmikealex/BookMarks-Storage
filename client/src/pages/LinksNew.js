@@ -5,12 +5,15 @@ import myFetch, { myFetch_new } from '../common/fetch'
 import WebLogger from 'mylogger/web-version'
 import Tags from './Tags'
 import UploadFiles, { submitFiles } from './UploadFiles'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import Link from '../components/Link'
+import Context from '../common/context'
 const log = new WebLogger(null, 'LinksNEW', 'magenta')
 
 export default function LinksNew() {
     log.verbs('--- Start function -LinksNew-')
+
+    const { toLog } = useContext(Context)
 
     const [errorResult, setErrorResult] = useState({ error: null, json: null })
     log.debug('Start errorResult =', errorResult)
@@ -35,6 +38,7 @@ export default function LinksNew() {
         // const { errorFetch, resultJSON: tags } = res
         // const { error: errorFetch, json: tags } = res
         // setErrorResult(res)
+        toLog(res.error)
         const tags = res.json
         const errorFetch = res.error
 
@@ -74,6 +78,8 @@ export default function LinksNew() {
         myFetch_new([newLink], 'links', 'POST').then((result) => {
             log.debug('myFetch result', result)
             setErrorResult(result)
+            toLog(result.error)
+
             // const { errorFetch, resultJSON } = result
             // if (errorFetch) {
             //     setError(resultJSON)

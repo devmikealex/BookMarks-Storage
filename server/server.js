@@ -73,53 +73,53 @@ app.use('/uploadfile', upload2.any(), function (req, res, next) {
 //     res.send('Main page WIP')
 // })
 
-app.get('/linkss', async function (req, res) {
-    let message, colorMessage
-    try {
-        console.log('SERVER--LINKs')
-        const a = await (await Link.findOne({ url: 'dfgdgdffff' })).populate('tags')
-        message = a
-        colorMessage = clc.yellow('--- OK ---\r\n' + message)
-    } catch (err) {
-        res.status(500)
-        message = { message: err.message }
-        colorMessage = clc.redBright('--- ERROR ---\r\n' + err.message)
-    } finally {
-        console.log(colorMessage)
-        res.send(message)
-    }
-})
+// app.get('/linkss', async function (req, res) {
+//     let message, colorMessage
+//     try {
+//         console.log('SERVER--LINKs')
+//         const a = await (await Link.findOne({ url: 'dfgdgdffff' })).populate('tags')
+//         message = a
+//         colorMessage = clc.yellow('--- OK ---\r\n' + message)
+//     } catch (err) {
+//         res.status(500)
+//         message = { message: err.message }
+//         colorMessage = clc.redBright('--- ERROR ---\r\n' + err.message)
+//     } finally {
+//         console.log(colorMessage)
+//         res.send(message)
+//     }
+// })
 
-app.post('/linkss', async function (req, res) {
-    let message, colorMessage
-    try {
-        console.log('SERVER--LINKs')
-        const link = req.body
-        console.log(link)
+// app.post('/linkss', async function (req, res) {
+//     let message, colorMessage
+//     try {
+//         console.log('SERVER--LINKs')
+//         const link = req.body
+//         console.log(link)
 
-        const a = await Tag.findOne({ title: 'JavaScript' })
-        console.log('🚀 ~ file: server.js ~ line 60 ~ a', a)
-        link.tags = a._id
-        const b = await Tag.findOne({ title: 'YouTube' })
-        console.log('🚀 ~ file: server.js ~ line 60 ~ b', b)
-        link.tags = [a._id, b._id]
+//         const a = await Tag.findOne({ title: 'JavaScript' })
+//         console.log('🚀 ~ file: server.js ~ line 60 ~ a', a)
+//         link.tags = a._id
+//         const b = await Tag.findOne({ title: 'YouTube' })
+//         console.log('🚀 ~ file: server.js ~ line 60 ~ b', b)
+//         link.tags = [a._id, b._id]
 
-        console.log(link)
-        // link.url += '--aaaaaaaa00'
-        const linkDB = await Link.create(link)
-        console.log('linkDB', linkDB)
+//         console.log(link)
+//         // link.url += '--aaaaaaaa00'
+//         const linkDB = await Link.create(link)
+//         console.log('linkDB', linkDB)
 
-        message = linkDB
-        colorMessage = clc.yellow('--- OK ---\r\n' + message)
-    } catch (err) {
-        res.status(500)
-        message = { message: err.message }
-        colorMessage = clc.redBright('--- ERROR ---\r\n' + err.message)
-    } finally {
-        console.log(colorMessage)
-        res.send(message)
-    }
-})
+//         message = linkDB
+//         colorMessage = clc.yellow('--- OK ---\r\n' + message)
+//     } catch (err) {
+//         res.status(500)
+//         message = { message: err.message }
+//         colorMessage = clc.redBright('--- ERROR ---\r\n' + err.message)
+//     } finally {
+//         console.log(colorMessage)
+//         res.send(message)
+//     }
+// })
 
 // app.use(function (req, res, next) {
 //     res.status(404)
