@@ -1,4 +1,4 @@
-import { Chip, Paper, Typography } from '@mui/material'
+import { Paper, Typography } from '@mui/material'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 
 import WebLogger from 'mylogger/web-version'
@@ -10,6 +10,7 @@ import Ahref from '@mui/material/Link'
 
 import { Link as RRLink } from 'react-router-dom'
 import Tag from './Tag'
+import CopyButton from './CopyButton'
 
 const PATH_TO_PREVIEW = process.env.REACT_APP_SERVER + '/static/images/'
 
@@ -56,10 +57,11 @@ export default function Link(props) {
             <Box sx={{ p: 3 }}>
                 <LinkWithCount item={props.item} color='text.primary'>
                     <Typography variant='h5' component='span'>
-                        {props.item.title} (копировать)
+                        {props.item.title}
                     </Typography>
-                    <br />
                 </LinkWithCount>
+                <CopyButton />
+                <br />
                 <LinkWithCount item={props.item}>{props.item.url}</LinkWithCount>
                 <Typography variant='body2'>
                     <Ahref
