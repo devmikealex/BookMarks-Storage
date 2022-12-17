@@ -14,11 +14,11 @@ export default function Tag(props) {
 
     const navigate = useNavigate()
 
-    const [chosen, setChosen] = useState(false)
+    const [chosen, setChosen] = useState(props.chosen)
     log.debug('Start chosen =', chosen)
     // const [error, setError] = useState(null)
     // log.debug('Start error =', error)
-    // todo naming
+    // TODO naming
     // const [newLinks, setNewLinks] = useState(null)
     // log.debug('Start newLinks =', newLinks)
 

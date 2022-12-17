@@ -62,6 +62,20 @@ async function BDRequest(req, res, BD, mode) {
                         JSON.stringify(result, null, 2)
                 )
                 break
+            case 'patch':
+                log.verbs(c.brightYellow + 'Enter "patch" mode')
+                const update = data[0]
+                const filter = { _id: update._id }
+                delete update._id
+                log.debug('filter', c.brightWhite, filter)
+                log.debug('update', c.brightCyan, update)
+                result = await BD.findByIdAndUpdate(filter, update)
+                log.debug(
+                    clc.bold('BD.patch \r\n') +
+                        c.brightBlue +
+                        JSON.stringify(result, null, 2)
+                )
+                break
             default:
                 break
         }

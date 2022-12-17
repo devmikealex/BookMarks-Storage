@@ -8,10 +8,13 @@ import UploadFiles, { submitFiles } from './UploadFiles'
 import { useContext, useState } from 'react'
 import Link from '../components/Link'
 import Context from '../common/context'
+import { useNavigate } from 'react-router-dom'
 const log = new WebLogger(null, 'LinksNEW', 'magenta')
 
 export default function LinksNew() {
     log.verbs('--- Start function -LinksNew-')
+
+    const navigate = useNavigate()
 
     const { toLog } = useContext(Context)
 
@@ -77,8 +80,11 @@ export default function LinksNew() {
         }
         myFetch_new([newLink], 'links', 'POST').then((result) => {
             log.debug('myFetch result', result)
+            console.log('aaaaa', result.json)
             setErrorResult(result)
             toLog(result.error)
+            log.debug('New link ID', result.json[0]._id)
+            navigate('/links/' + result.json[0]._id)
 
             // const { errorFetch, resultJSON } = result
             // if (errorFetch) {

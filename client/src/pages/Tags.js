@@ -52,6 +52,10 @@ export default function Tags(props) {
     }, [id, forceRerender])
     log.verbs('--- Start Render Tags')
 
+    //TODO пометить существующие теги для редактирования props.currentTags 'тег1, тег2, тег3'
+
+    // TODO что то сделать с setSnackbar
+
     return (
         <Paper variant='outlined' sx={{ p: 2 }}>
             <TagsNew
@@ -63,12 +67,17 @@ export default function Tags(props) {
             {tags && (
                 <Box sx={{ flexDirection: 'row', pt: 2 }}>
                     {tags.map((item) => {
+                        // console.log(props?.currentTags)
+                        // console.log(props?.currentTags?.includes(item.title))
+                        // console.log(!!props?.currentTags.includes(item.title))
+                        const chosen = !!props?.currentTags?.includes(item.title)
                         return (
                             <Tag
                                 item={item}
                                 key={item._id}
                                 setTagsValue={props.setTagsValue}
                                 deletable={deletable}
+                                chosen={chosen}
                                 setForceRerender={setForceRerender}
                                 setSnackbar={setSnackbar}
                             />

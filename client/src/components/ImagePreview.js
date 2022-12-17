@@ -5,10 +5,12 @@ const PATH_TO_PREVIEW = process.env.REACT_APP_SERVER + '/static/images/'
 export default function ImagePreview(props) {
     let button = null,
         title = null
+    const saveStatus = props.saveStatus
     if (props.funcDelete) {
         button = (
             <Button
-                variant='outlined'
+                color={saveStatus ? 'primary' : 'error'}
+                variant={saveStatus ? 'outlined' : 'contained'}
                 size='small'
                 onClick={() => props.funcDelete(props.image)}
                 sx={{ mt: -0.5 }}

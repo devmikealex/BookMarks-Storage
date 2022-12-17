@@ -22,9 +22,13 @@ router
     // .get((req, res) => findTagsByFilters(req, res, Link))
     .get((req, res) => BDRequest(req, res, Link, 'find'))
     .post((req, res) => BDRequest(req, res, Link, 'add'))
+    .patch((req, res) => BDRequest(req, res, Link, 'patch'))
 // .post(function (req, res) {
 //     res.send('links post-')
 // })
+
+router.post('/filters', (req, res) => BDRequest(req, res, Link, 'find'))
+// router.post('/filters', (req, res) => findTagsByFilters(req, res, Link))
 
 router.get('/countinc/:id', (req, res) => {
     log.debug(clc.cyan('countinc ID processing, req.params ='), req.params)
@@ -44,11 +48,8 @@ router.get('/countinc/:id', (req, res) => {
     )
 })
 
-// router.post('/filters', (req, res) => findTagsByFilters(req, res, Link))
-router.post('/filters', (req, res) => BDRequest(req, res, Link, 'find'))
-
 router.get('/tag/:id', (req, res) => {
-    async function ttt() {
+    async function test() {
         let data
         try {
             // contains only tags where tagName is 'YouTube' or 'politics'
@@ -64,7 +65,7 @@ router.get('/tag/:id', (req, res) => {
         }
         res.json(data)
     }
-    ttt()
+    test()
 })
 
 router.get('/:id', (req, res) => {
