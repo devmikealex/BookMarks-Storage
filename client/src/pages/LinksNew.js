@@ -120,7 +120,9 @@ export default function LinksNew() {
                     name='description'
                     id='inp-description'
                     multiline
-                    rows={2}
+                    // rows={2}
+                    minRows={2}
+                    maxRows={10}
                     margin='dense'
                 />
                 <TextField
@@ -142,7 +144,7 @@ export default function LinksNew() {
                     InputLabelProps={{ shrink: tagsValue.value }}
                     // onChange={() => {}}
                 />
-                <Tags setTagsValue={setTagsValue} />
+                <Tags setTagsValue={setTagsValue} buttonType='outlined' />
                 {/* <TextField
                     fullWidth
                     label='Previews'

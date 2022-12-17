@@ -1,8 +1,8 @@
-import { Link, Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import NavbarLay from './layouts/NavbarLay'
-import Links from './pages/Links'
 import Main from './pages/Main'
-import New from './pages/New'
+import Links from './pages/Links'
+import LinksEdit from './pages/LinksEdit'
 import NotFound from './pages/NotFound'
 import Search from './pages/Search'
 import Tags from './pages/Tags'
@@ -17,8 +17,8 @@ import './App.css'
 import WebLogger from 'mylogger/web-version'
 import LinksNew from './pages/LinksNew'
 import Appbar from './components/Appbar'
-import { Button, Container, createTheme, CssBaseline, ThemeProvider } from '@mui/material'
-import { createContext, useState } from 'react'
+import { Container, createTheme, CssBaseline, ThemeProvider } from '@mui/material'
+import { useState } from 'react'
 import UploadFiles from './pages/UploadFiles'
 import InfoLog from './components/InfoLog'
 import Context from './common/context'
@@ -84,7 +84,7 @@ function App() {
                                 <Route index element={<Links />} />
                                 <Route path='new' element={<LinksNew />} />
                                 <Route path=':id' element={<Links />} />
-                                <Route path='edit/:id' element={<Links />} />
+                                <Route path='edit/:id' element={<LinksEdit />} />
                             </Route>
 
                             <Route path='*' element={<NotFound />} />

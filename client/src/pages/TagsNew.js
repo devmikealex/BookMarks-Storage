@@ -20,6 +20,8 @@ export default function TagsNew(props) {
     const wrapper = props.wrapper ?? false
     log.debug('wrapper =', wrapper)
 
+    const buttonType = props.buttonType ?? 'contained'
+
     const main = (
         <>
             <div>
@@ -36,7 +38,7 @@ export default function TagsNew(props) {
                         sx={{ width: '100%' }}
                     />
                     <Button
-                        variant='contained'
+                        variant={buttonType}
                         endIcon={<AddIcon />}
                         // sx={{ minWidth: '100%', mt: 1 }}
                         sx={{ flexShrink: 0 }}

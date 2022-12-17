@@ -39,7 +39,7 @@ export function submitFiles(e) {
     return files
 }
 
-export default function Upload() {
+export default function Upload(props) {
     const [uploadsNum, setUploadsNum] = useState(1)
 
     const rows = []
@@ -66,7 +66,7 @@ export default function Upload() {
                 }
             >
                 <TextField
-                    sizeSmall
+                    size='small'
                     id={INPUT_NAME + i}
                     name={'upload' + i}
                     onChange={changeImage}
@@ -106,6 +106,7 @@ export default function Upload() {
             img.src = URL.createObjectURL(file)
             img.removeAttribute('hidden')
         }
+        if (props.funcAddImage) props.funcAddImage(e.target.files[0].name)
     }
 
     function changeInputNum(e, mode) {
@@ -128,10 +129,10 @@ export default function Upload() {
         <div>
             {/* <h1>Upload</h1> */}
             <Typography variant='body1' component='span' sx={{ mr: 1 }}>
-                Upload preview images
+                Upload new preview image: {uploadsNum}
             </Typography>
             <Button
-                type='submit'
+                // type='submit'
                 variant='outlined'
                 size='small'
                 onClick={(e) => changeInputNum(e, '+')}
@@ -140,7 +141,7 @@ export default function Upload() {
                 +
             </Button>
             <Button
-                type='submit'
+                // type='submit'
                 variant='outlined'
                 size='small'
                 onClick={(e) => changeInputNum(e, '-')}

@@ -54,8 +54,12 @@ export default function Tags(props) {
 
     return (
         <Paper variant='outlined' sx={{ p: 2 }}>
-            <TagsNew setForceRerender={setForceRerender} wrapper={wrapper} />
-            {id && <p>ID={id}</p>}
+            <TagsNew
+                setForceRerender={setForceRerender}
+                wrapper={wrapper}
+                buttonType={props.buttonType}
+            />
+            {/* {id && <p>ID={id}</p>} */}
             {tags && (
                 <Box sx={{ flexDirection: 'row', pt: 2 }}>
                     {tags.map((item) => {

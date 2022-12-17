@@ -4,12 +4,12 @@ import FileCopyIcon from '@mui/icons-material/FileCopy'
 export default function CopyButton() {
     return (
         <IconButton
-            color='black'
+            // color='Silver'
             onClick={copyToClipboard}
             aria-label='copy'
             sx={{ top: '-4px' }}
         >
-            <FileCopyIcon fontSize='small' />
+            <FileCopyIcon fontSize='small' color='disabled' />
         </IconButton>
     )
 }

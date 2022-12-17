@@ -5,7 +5,7 @@ import { myFetch_new } from '../common/fetch'
 
 import WebLogger from 'mylogger/web-version'
 import { useState } from 'react'
-import { redirect, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 const log = new WebLogger('error', 'TAG', 'white-Chocolate')
 
 export default function Tag(props) {

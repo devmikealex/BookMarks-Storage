@@ -11,6 +11,8 @@ import Ahref from '@mui/material/Link'
 import { Link as RRLink } from 'react-router-dom'
 import Tag from './Tag'
 import CopyButton from './CopyButton'
+import EditButton from './EditButton'
+import ImagePreview from './ImagePreview'
 
 const PATH_TO_PREVIEW = process.env.REACT_APP_SERVER + '/static/images/'
 
@@ -61,6 +63,7 @@ export default function Link(props) {
                     </Typography>
                 </LinkWithCount>
                 <CopyButton />
+                <EditButton item={props.item} />
                 <br />
                 <LinkWithCount item={props.item}>{props.item.url}</LinkWithCount>
                 <Typography variant='body2'>
@@ -87,18 +90,23 @@ export default function Link(props) {
                 </Box>
                 {props.item.crt_date} --- {props.item.mod_date}
                 <Typography>{props.item.description}</Typography>
-                {props.item.images.map((item) => {
-                    return (
-                        <img
-                            src={PATH_TO_PREVIEW + item}
-                            width='300px'
-                            height='200px'
-                            alt='preview'
-                            key={item}
-                            style={{ objectFit: 'cover', marginRight: '4px' }}
-                        />
+                {props.item.images.map(
+                    (item) => (
+                        <ImagePreview image={item} key={item} />
                     )
-                })}
+                    // {
+                    //     return (
+                    //         <img
+                    //             src={PATH_TO_PREVIEW + item}
+                    //             width='300px'
+                    //             height='200px'
+                    //             alt='preview'
+                    //             key={item}
+                    //             style={{ objectFit: 'cover', marginRight: '4px' }}
+                    //         />
+                    //     )
+                    // }
+                )}
             </Box>
         </Paper>
     )
