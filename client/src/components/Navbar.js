@@ -25,6 +25,9 @@ export default function Navbar() {
                     <Link to='/links/123'>Link id 123</Link>
                 </li>
                 <li>
+                    <Link to='/links/?limit=5&sfield=title&sorder=1'>Link SORT</Link>
+                </li>
+                <li>
                     <a href={`${process.env.REACT_APP_SERVER}/tags/createTestTags`}>
                         createTestTags
                     </a>

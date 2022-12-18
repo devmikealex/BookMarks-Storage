@@ -3,7 +3,7 @@ const clc = require('cli-color')
 const c = require('mylogger/colors')
 const Logger = require('mylogger')
 const Link = require('../models/Link')
-const log = new Logger(undefined, 'BDfnc', c.bgCyan + c.black)
+const log = new Logger('silly', 'BDfnc', c.bgCyan + c.black)
 
 /**
  * Обработка разных запросов к базе данных
@@ -30,7 +30,21 @@ async function BDRequest(req, res, BD, mode) {
                 log.debug('Data for BD:', data)
 
                 // result = await BD.find(data)
+
+                // query = BD.find(data)
+                // if (BD === Link) query = query.populate('tags')
+                // result = await query.exec()
                 query = BD.find(data)
+                //TODO получить инфу через params......
+                const limit = req.query.limit ?? 10
+                log.debug('limit:', limit)
+                query = query.limit(limit)
+
+                const sortField = req.query.sfield ?? 'mod_date'
+                const sortOrder = req.query.sorder ?? -1
+                query = query.sort({ [sortField]: sortOrder })
+                log.debug('sortField:', sortField, '- sortOrder:', sortOrder)
+
                 if (BD === Link) query = query.populate('tags')
                 result = await query.exec()
 

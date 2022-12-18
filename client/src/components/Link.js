@@ -88,8 +88,9 @@ export default function Link(props) {
                         Clicks: {props.item.clicks}
                     </Typography>
                 </Box>
-                {props.item.crt_date} --- {props.item.mod_date}
                 <Typography>{props.item.description}</Typography>
+                {new Date(props.item.crt_date).toLocaleString()} <br />
+                {new Date(props.item.mod_date).toLocaleString()} <br />
                 {props.item.images.map(
                     (item) => (
                         <ImagePreview image={item} key={item} />

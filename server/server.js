@@ -1,6 +1,8 @@
 console.log('')
 console.log('---')
 
+const fetch = (...args) =>
+    import('node-fetch').then(({ default: fetch }) => fetch(...args))
 const mongoose = require('mongoose')
 const Link = require('./models/Link')
 const Tag = require('./models/Tag')
@@ -67,6 +69,34 @@ app.use('/uploadfile', upload2.any(), function (req, res, next) {
     log.debug('Files for UPLOAD' + c.brightBlue, req.files)
     // console.log('body', req.body)
     res.json(req.files)
+})
+app.post('/geturlinfo', (req, res) => {
+    const FUNC_NAME = '/geturlinfo'
+    log.verbs('--- Start func ' + c.cyan + FUNC_NAME)
+    log.debug('req.body =\r\n' + c.brightBlue, req.body)
+    let { url } = req.body
+
+    if (!url) return res.status(400).json({ message: 'Missing url parameter' })
+
+    fetch(url)
+        .then((res) => res.text()) // parse response's body as text
+        .then((body) => parseTitle(body)) // extract <title> from body
+        .then((title) => {
+            log.debug(c.brightGreen + title)
+            res.json({ title })
+        })
+        .catch((e) => {
+            log.error(e.message)
+            res.status(500).json({ message: e.message })
+        })
+
+    function parseTitle(body) {
+        let match = body.match(/<title>([^<]*)<\/title>/)
+        if (!match || typeof match[1] !== 'string')
+            throw new Error('Unable to parse the <title> tag')
+        // log.debug(c.cyan + 'parseTitle match:' + c.brightYellow, match)
+        return match[1]
+    }
 })
 
 // app.get('/', function (req, res) {
