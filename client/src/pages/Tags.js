@@ -1,10 +1,12 @@
 import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 
+import EditButton from '../components/EditButton'
+
 import { myFetch_new } from '../common/fetch'
 import Tag from '../components/Tag'
 import TagsNew from './TagsNew'
-import { Box, Paper, Snackbar } from '@mui/material'
+import { Box, Button, Paper, Snackbar } from '@mui/material'
 
 import WebLogger from 'mylogger/web-version'
 import AlertInfo from '../components/AlertInfo'
@@ -45,10 +47,12 @@ export default function Tags(props) {
 
     useEffect(() => {
         log.verbs('Enter to useEffect[]')
-        myFetch_new(null, 'tags', 'GET').then((result) => {
-            log.debug('myFetch result', result)
-            setErrorResult(result)
-        })
+        myFetch_new(null, 'tags' + '?sfield=title&sorder=1&limit=0', 'GET').then(
+            (result) => {
+                log.debug('myFetch result', result)
+                setErrorResult(result)
+            }
+        )
     }, [id, forceRerender])
     log.verbs('--- Start Render Tags')
 
@@ -72,15 +76,20 @@ export default function Tags(props) {
                         // console.log(!!props?.currentTags.includes(item.title))
                         const chosen = !!props?.currentTags?.includes(item.title)
                         return (
-                            <Tag
-                                item={item}
-                                key={item._id}
-                                setTagsValue={props.setTagsValue}
-                                deletable={deletable}
-                                chosen={chosen}
-                                setForceRerender={setForceRerender}
-                                setSnackbar={setSnackbar}
-                            />
+                            <>
+                                <Tag
+                                    item={item}
+                                    key={item._id}
+                                    setTagsValue={props.setTagsValue}
+                                    deletable={deletable}
+                                    chosen={chosen}
+                                    setForceRerender={setForceRerender}
+                                    setSnackbar={setSnackbar}
+                                />
+                                {deletable && (
+                                    <EditButton tag item={item} sx={{ p: 0, top: -1 }} />
+                                )}
+                            </>
                         )
                     })}
                 </Box>

@@ -1,5 +1,5 @@
 import { useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 
 import WebLogger from 'mylogger/web-version'
 import { myFetch_new } from '../common/fetch'
@@ -7,6 +7,7 @@ import Link from '../components/Link'
 import Context from '../common/context'
 import Tag from '../components/Tag'
 import { Typography } from '@mui/material'
+import EditButton from '../components/EditButton'
 const log = new WebLogger(null, 'LINKS', 'green')
 
 export default function Links() {
@@ -38,6 +39,8 @@ export default function Links() {
     const { id } = useParams()
     log.debug('id =', id)
 
+    const tagObj = useRef({})
+
     const [errorResult, setErrorResult] = useState({ error: null, json: null })
     log.debug('Start errorResult =', errorResult)
     // const links = errorResult.json
@@ -57,8 +60,12 @@ export default function Links() {
                 metod = 'POST'
                 if (locat.state) {
                     tagID = locat.state._id
+                    tagObj.current = locat.state
+                    log.debug('Set tagID from locat.state', tagID)
                 } else {
-                    tagID = await getTagIDforName(currentTag)
+                    tagObj.current = await getTagbyID(currentTag)
+                    tagID = tagObj.current._id
+                    log.debug('Set tagID from tagObj.current', tagID)
                 }
                 obj = { tags: tagID }
             }
@@ -83,6 +90,9 @@ export default function Links() {
             <Typography variant='h4'>
                 Links List {links?.length}{' '}
                 {currentTag && <Tag item={{ title: currentTag }}></Tag>}
+                {currentTag && (
+                    <EditButton tag item={tagObj.current} sx={{ left: -5, top: 0 }} />
+                )}
             </Typography>
             {id && <p>ID={id}</p>}
             {links && (
@@ -97,13 +107,13 @@ export default function Links() {
     )
 }
 
-async function getTagIDforName(tagName) {
-    log.verbs('--- Start function -getTagIDforName-')
+async function getTagbyID(tagName) {
+    log.verbs('--- Start function -getTagbyID-')
     const res = await myFetch_new({ title: tagName }, 'tags/filters', 'POST')
     log.debug('---------myFetch result', res)
-    const tagID = res.json[0]._id
-    log.debug('tagID =', tagID)
+    // const tagID = res.json[0]._id
+    // log.debug('tagID =', tagID)
     // toLog(res.error)
-    log.verbs('--- Exit function -getTagIDforName-')
-    return tagID
+    log.verbs('--- Exit function -getTagbyID-')
+    return res.json[0]
 }

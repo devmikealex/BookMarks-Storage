@@ -1,14 +1,24 @@
-import { Alert, Button, Paper, TextField, Typography } from '@mui/material'
+import {
+    Alert,
+    Button,
+    IconButton,
+    LinearProgress,
+    Paper,
+    TextField,
+    Typography,
+} from '@mui/material'
 import SendIcon from '@mui/icons-material/Send'
 
 import myFetch, { myFetch_new } from '../common/fetch'
 import WebLogger from 'mylogger/web-version'
 import Tags from './Tags'
 import UploadFiles, { submitFiles } from './UploadFiles'
-import { useContext, useState } from 'react'
+import { useContext, useRef, useState } from 'react'
 import Link from '../components/Link'
 import Context from '../common/context'
 import { useNavigate } from 'react-router-dom'
+import UploadFileIcon from '@mui/icons-material/UploadFile'
+import getURLinfo from '../common/geturlinfo'
 const log = new WebLogger(null, 'LinksNEW', 'magenta')
 
 export default function LinksNew() {
@@ -18,6 +28,8 @@ export default function LinksNew() {
 
     const { toLog } = useContext(Context)
 
+    // const titleInputRef = useRef()
+
     const [errorResult, setErrorResult] = useState({ error: null, json: null })
     log.debug('Start errorResult =', errorResult)
     const newLinks = errorResult.json
@@ -26,6 +38,11 @@ export default function LinksNew() {
     // log.debug('Start error =', error)
     // const [newLinks, setNewLinks] = useState(null)
     // log.debug('Start newLinks =', newLinks)
+
+    const [loading, setLoading] = useState(false)
+
+    const [titleValue, setTitleValue] = useState('')
+    log.debug('Start titleValue =', titleValue)
 
     const [tagsValue, setTagsValue] = useState('')
     const handleChange = (event) => {
@@ -109,6 +126,11 @@ export default function LinksNew() {
                     name='title'
                     id='inp-title'
                     margin='dense'
+                    value={titleValue}
+                    onChange={(e) => {
+                        setTitleValue(e.target.value)
+                    }}
+                    InputLabelProps={{ shrink: titleValue.value }}
                 />
                 <TextField
                     size='small'
@@ -119,6 +141,16 @@ export default function LinksNew() {
                     id='inp-url'
                     margin='dense'
                 />
+                {/* // TODO сделать нормально */}
+                <IconButton
+                    onClick={() => {
+                        setLoading(true)
+                        getURLinfo(toLog, setLoading, setTitleValue)
+                    }}
+                >
+                    <UploadFileIcon fontSize='small' />
+                </IconButton>
+                {loading && <LinearProgress />}
                 <TextField
                     size='small'
                     fullWidth

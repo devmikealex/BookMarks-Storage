@@ -22,6 +22,7 @@ router
     .get((req, res) => BDRequest(req, res, Tag, 'find'))
     .post((req, res) => BDRequest(req, res, Tag, 'add'))
     .delete((req, res) => BDRequest(req, res, Tag, 'delete'))
+    .patch((req, res) => BDRequest(req, res, Tag, 'patch'))
 
 router.post('/filters', (req, res) => BDRequest(req, res, Tag, 'find'))
 
