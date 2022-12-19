@@ -1,5 +1,6 @@
 import {
     Alert,
+    Box,
     Button,
     IconButton,
     LinearProgress,
@@ -43,6 +44,8 @@ export default function LinksNew() {
 
     const [titleValue, setTitleValue] = useState('')
     log.debug('Start titleValue =', titleValue)
+    const [decriptionValue, setDecriptionValue] = useState('')
+    log.debug('Start decriptionValue =', decriptionValue)
 
     const [tagsValue, setTagsValue] = useState('')
     const handleChange = (event) => {
@@ -132,26 +135,39 @@ export default function LinksNew() {
                     }}
                     InputLabelProps={{ shrink: titleValue.value }}
                 />
-                <TextField
-                    size='small'
-                    fullWidth
-                    required
-                    label='URL'
-                    name='url'
-                    id='inp-url'
-                    margin='dense'
-                />
-                {/* // TODO сделать нормально */}
-                <IconButton
-                    onClick={() => {
-                        setLoading(true)
-                        getURLinfo(toLog, setLoading, setTitleValue)
-                    }}
-                >
-                    <UploadFileIcon fontSize='small' />
-                </IconButton>
+                <Box sx={{ display: 'flex', gap: 1, mt: 1, mb: 0.5 }}>
+                    <TextField
+                        size='small'
+                        fullWidth
+                        required
+                        label='URL'
+                        name='url'
+                        id='inp-url'
+                        // margin='dense'
+                        sx={{ width: '100%' }}
+                    />
+                    <Button
+                        variant='outlined'
+                        endIcon={<UploadFileIcon />}
+                        sx={{ flexShrink: 0 }}
+                        onClick={() => {
+                            setLoading(true)
+                            getURLinfo(
+                                toLog,
+                                setLoading,
+                                setTitleValue,
+                                setDecriptionValue
+                            )
+                        }}
+                    >
+                        Read info
+                        {/* <UploadFileIcon fontSize='small' /> */}
+                    </Button>
+                </Box>
+
                 {loading && <LinearProgress />}
                 <TextField
+                    value={decriptionValue}
                     size='small'
                     fullWidth
                     label='Description'
@@ -162,6 +178,10 @@ export default function LinksNew() {
                     minRows={2}
                     maxRows={10}
                     margin='dense'
+                    onChange={(e) => {
+                        setDecriptionValue(e.target.value)
+                    }}
+                    InputLabelProps={{ shrink: decriptionValue.value }}
                 />
                 <TextField
                     size='small'

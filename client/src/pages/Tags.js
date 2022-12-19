@@ -76,10 +76,10 @@ export default function Tags(props) {
                         // console.log(!!props?.currentTags.includes(item.title))
                         const chosen = !!props?.currentTags?.includes(item.title)
                         return (
-                            <>
+                            <span key={item._id}>
                                 <Tag
                                     item={item}
-                                    key={item._id}
+                                    // key={item._id}
                                     setTagsValue={props.setTagsValue}
                                     deletable={deletable}
                                     chosen={chosen}
@@ -89,7 +89,7 @@ export default function Tags(props) {
                                 {deletable && (
                                     <EditButton tag item={item} sx={{ p: 0, top: -1 }} />
                                 )}
-                            </>
+                            </span>
                         )
                     })}
                 </Box>
