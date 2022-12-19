@@ -76,8 +76,8 @@ export default function TagsNew(props) {
             log.debug('myFetch result', result)
             setErrorResult(result)
             toLog(result.error)
-            myInputRef.current.value = ''
             props.setForceRerender(myInputRef.current.value)
+            myInputRef.current.value = ''
         })
 
         log.verbs('--- Exit function Send')

@@ -89,8 +89,8 @@ export default function Link(props) {
                     </Typography>
                 </Box>
                 <Typography>{props.item.description}</Typography>
-                {new Date(props.item.crt_date).toLocaleString()} <br />
-                {new Date(props.item.mod_date).toLocaleString()} <br />
+                Создано: {new Date(props.item.crt_date).toLocaleString()} <br />
+                Изменено: {new Date(props.item.mod_date).toLocaleString()} <br />
                 {props.item.images.map(
                     (item) => (
                         <ImagePreview image={item} key={item} />

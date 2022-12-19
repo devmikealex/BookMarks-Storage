@@ -19,6 +19,15 @@ await MyModel.find({ name: /john/i }, null, { skip: 10 }).exec();
 
 ---
 
+## An automatic web page content **extractor** for Node.js!
+
+- [ageitgey/node-unfluff: Automatically extract body content (and other cool stuff) from an html document](https://github.com/ageitgey/node-unfluff)
+- [node-article-extractor - npm](https://www.npmjs.com/package/node-article-extractor?activeTab=readme)
+- [craftzdog/extract-main-text-node: ExtractContent for node.js](https://github.com/craftzdog/extract-main-text-node)
+- [@extractus/article-extractor - npm](https://www.npmjs.com/package/@extractus/article-extractor)
+
+---
+
 ## Files Upload
 
 - [**dropzone-ui-react**: The most complete React Library Component for drag’n’drop files.](https://github.com/dropzone-ui/dropzone-ui-react) Image and video previews. File validation. Multilanguage. Server side support.

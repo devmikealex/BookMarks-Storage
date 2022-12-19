@@ -1,10 +1,10 @@
 import { myFetch_new } from './fetch'
 
 export default async function getURLinfo(
-    toLog,
-    setLoading,
-    setTitleValue,
-    setDecriptionValue
+    toLog
+    // setLoading,
+    // setTitleValue,
+    // setDecriptionValue
 ) {
     // console.log('asdasdasdasdakjdhsdkfghsdfghsldkj')
     // const title = document.getElementById('inp-title')
@@ -12,10 +12,11 @@ export default async function getURLinfo(
     const result = await myFetch_new({ url }, 'geturlinfo', 'POST')
     // console.log('myFetch result', result)
     // title.value = result?.json?.title
-    setLoading(false)
+    // setLoading(false)
     if (result.error) toLog(result.error)
     if (result.json) {
-        setTitleValue(result.json.title)
-        setDecriptionValue(result.json.description)
+        // setTitleValue(result.json.title)
+        // setDecriptionValue(result.json.description)
+        return result.json
     }
 }

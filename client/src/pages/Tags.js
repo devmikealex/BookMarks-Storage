@@ -47,12 +47,10 @@ export default function Tags(props) {
 
     useEffect(() => {
         log.verbs('Enter to useEffect[]')
-        myFetch_new(null, 'tags' + '?sfield=title&sorder=1&limit=0', 'GET').then(
-            (result) => {
-                log.debug('myFetch result', result)
-                setErrorResult(result)
-            }
-        )
+        myFetch_new(null, 'tags' + '?sfield=title&sorder=1', 'GET').then((result) => {
+            log.debug('myFetch result', result)
+            setErrorResult(result)
+        })
     }, [id, forceRerender])
     log.verbs('--- Start Render Tags')
 
@@ -76,7 +74,7 @@ export default function Tags(props) {
                         // console.log(!!props?.currentTags.includes(item.title))
                         const chosen = !!props?.currentTags?.includes(item.title)
                         return (
-                            <span key={item._id}>
+                            <span key={item._id} style={{ display: 'inline-block' }}>
                                 <Tag
                                     item={item}
                                     // key={item._id}

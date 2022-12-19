@@ -36,7 +36,7 @@ async function BDRequest(req, res, BD, mode) {
                 // result = await query.exec()
                 query = BD.find(data)
                 //TODO получить инфу через params......
-                const limit = req.query.limit ?? 10
+                const limit = req.query.limit ?? 0
                 log.debug('limit:', limit)
                 query = query.limit(limit)
 

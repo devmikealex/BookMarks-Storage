@@ -26,8 +26,12 @@ async function geturlinfo(req, res) {
 
     try {
         const article = await extract(url, {
-            descriptionTruncateLen: 800,
+            wordsPerMinute: 600,
+            descriptionTruncateLen: 1000,
+            descriptionLengthThreshold: 600,
+            contentLengthThreshold: 100,
         })
+        delete article.content
         log.debug('Article for url:\r\n' + c.brightBlue, article)
         res.json(article)
     } catch (e) {

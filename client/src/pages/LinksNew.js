@@ -134,6 +134,7 @@ export default function LinksNew() {
                         setTitleValue(e.target.value)
                     }}
                     InputLabelProps={{ shrink: titleValue.value }}
+                    inputProps={{ style: { fontSize: 30 } }}
                 />
                 <Box sx={{ display: 'flex', gap: 1, mt: 1, mb: 0.5 }}>
                     <TextField
@@ -150,14 +151,17 @@ export default function LinksNew() {
                         variant='outlined'
                         endIcon={<UploadFileIcon />}
                         sx={{ flexShrink: 0 }}
-                        onClick={() => {
+                        onClick={async () => {
                             setLoading(true)
-                            getURLinfo(
-                                toLog,
-                                setLoading,
-                                setTitleValue,
-                                setDecriptionValue
+                            const res = await getURLinfo(
+                                toLog
+                                // setLoading,
+                                // setTitleValue,
+                                // setDecriptionValue
                             )
+                            setLoading(false)
+                            setTitleValue(res.title)
+                            setDecriptionValue(res.description)
                         }}
                     >
                         Read info
@@ -182,6 +186,7 @@ export default function LinksNew() {
                         setDecriptionValue(e.target.value)
                     }}
                     InputLabelProps={{ shrink: decriptionValue.value }}
+                    inputProps={{ style: { fontSize: '1.5em', lineHeight: '1.3em' } }}
                 />
                 <TextField
                     size='small'
