@@ -5,12 +5,15 @@ import { myFetch_new } from '../common/fetch'
 import { Box, Button, Paper, TextField, Typography } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
 
-import { useRef, useState } from 'react'
+import { useContext, useRef, useState } from 'react'
+import Context from '../common/context'
 
 const log = new WebLogger(null, 'TAGSNEW', 'green')
 
 export default function TagsNew(props) {
     log.verbs('--- Start function TagsNew')
+    const { toLog } = useContext(Context)
+
     const myInputRef = useRef()
     const [errorResult, setErrorResult] = useState({ error: null, json: null })
     log.debug('Start errorResult =', errorResult)
@@ -21,6 +24,10 @@ export default function TagsNew(props) {
     log.debug('wrapper =', wrapper)
 
     const buttonType = props.buttonType ?? 'contained'
+
+    // TODO обработка ошибок проверить / сейчас двойная обработка
+    // возмоно оставить зеленое сообщение
+    // они так же показываются на экране новой ссылки!
 
     const main = (
         <>
@@ -68,8 +75,11 @@ export default function TagsNew(props) {
         myFetch_new(newTag, 'tags', 'POST').then((result) => {
             log.debug('myFetch result', result)
             setErrorResult(result)
+            toLog(result.error)
+            myInputRef.current.value = ''
             props.setForceRerender(myInputRef.current.value)
         })
+
         log.verbs('--- Exit function Send')
     }
 }

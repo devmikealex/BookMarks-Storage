@@ -69,6 +69,7 @@ export default function TagsEdit() {
                         id='inp-title'
                         // margin='dense'
                         sx={{ width: '100%' }}
+                        inputProps={{ style: { fontSize: 30 } }}
                     />
                     <Button
                         variant='contained'
