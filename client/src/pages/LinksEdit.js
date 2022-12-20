@@ -4,7 +4,7 @@ import SendIcon from '@mui/icons-material/Send'
 import { myFetch_new } from '../common/fetch'
 import WebLogger from 'mylogger/web-version'
 import Tags from './Tags'
-import UploadFiles, { submitFiles } from './UploadFiles'
+import UploadFiles, { submitFiles } from '../components/UploadFiles'
 import { useContext, useState } from 'react'
 import Link from '../components/Link'
 import Context from '../common/context'
@@ -13,6 +13,7 @@ import ImagePreview from '../components/ImagePreview'
 
 import Ahref from '@mui/material/Link'
 import { Link as RRLink } from 'react-router-dom'
+import HttpFiles, { submitHttpLinks } from '../components/HttpFiles'
 
 const log = new WebLogger(null, 'LinksEdit', 'DarkViolet')
 
@@ -79,7 +80,8 @@ export default function LinksEdit() {
         }
 
         log.debug('images 1 =', images)
-        const images2 = submitFiles()
+        const images2 = [...submitFiles(), ...submitHttpLinks()]
+
         images = [...images, ...images2]
         log.debug('images 2 =', images)
 
@@ -215,6 +217,7 @@ export default function LinksEdit() {
                     })}
                 </Box>
                 <UploadFiles />
+                <HttpFiles />
                 {/* <TextField
                     size='small'
                     fullWidth

@@ -13,13 +13,14 @@ import SendIcon from '@mui/icons-material/Send'
 import myFetch, { myFetch_new } from '../common/fetch'
 import WebLogger from 'mylogger/web-version'
 import Tags from './Tags'
-import UploadFiles, { submitFiles } from './UploadFiles'
+import UploadFiles, { submitFiles } from '../components/UploadFiles'
 import { useContext, useRef, useState } from 'react'
 import Link from '../components/Link'
 import Context from '../common/context'
 import { useNavigate } from 'react-router-dom'
 import UploadFileIcon from '@mui/icons-material/UploadFile'
 import getURLinfo from '../common/geturlinfo'
+import HttpFiles, { submitHttpLinks } from '../components/HttpFiles'
 const log = new WebLogger(null, 'LinksNEW', 'magenta')
 
 export default function LinksNew() {
@@ -88,7 +89,7 @@ export default function LinksNew() {
         }
         log.debug('tagsID', tagsID)
 
-        const images = submitFiles()
+        const images = [...submitFiles(), ...submitHttpLinks()]
 
         const newLink = {
             title: e.target.title.value,
@@ -216,6 +217,7 @@ export default function LinksNew() {
                     margin='dense'
                 /> */}
                 <UploadFiles />
+                <HttpFiles />
                 <Button
                     variant='contained'
                     endIcon={<SendIcon />}

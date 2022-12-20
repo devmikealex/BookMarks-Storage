@@ -20,7 +20,7 @@ import LinksNew from './pages/LinksNew'
 import Appbar from './components/Appbar'
 import { Container, createTheme, CssBaseline, ThemeProvider } from '@mui/material'
 import { useState } from 'react'
-import UploadFiles from './pages/UploadFiles'
+import UploadFiles from './components/UploadFiles'
 import InfoLog from './components/InfoLog'
 import Context from './common/context'
 // import Upload-test from './pages/Upload-test'
@@ -38,7 +38,24 @@ function App() {
             const newLine = { time: Date.now(), message: text }
             // history.push(newLine)
             setHistory([newLine, ...history])
+            //TODO может сделать принудительный ре-рендер
         }
+    }
+
+    /**
+     * Показать модальное сообщение
+     * @param {string} title Заголовок модального окна
+     * @param {string} message Сообщение (тело)
+     * @param {function} funcYes Функция для положительного ответа
+     * @param {any} args Аргументы для функции
+     */
+    function toModalAlert(title, message, funcYes, args) {
+        log.verbs('--- Start function -toModalAlert-')
+        log.debug('Title =', title)
+        log.debug('Message =', message)
+        log.debug('args =', args)
+
+        funcYes(args)
     }
 
     const themeDark = createTheme({
@@ -59,7 +76,7 @@ function App() {
     })
 
     return (
-        <Context.Provider value={{ toLog: toLog }}>
+        <Context.Provider value={{ toLog, toModalAlert }}>
             <ThemeProvider theme={darkMode ? themeDark : themeLight}>
                 <CssBaseline />
                 <div className='App'>

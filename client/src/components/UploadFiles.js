@@ -106,7 +106,7 @@ export default function Upload(props) {
             img.src = URL.createObjectURL(file)
             img.removeAttribute('hidden')
         }
-        if (props.funcAddImage) props.funcAddImage(e.target.files[0].name)
+        // if (props.funcAddImage) props.funcAddImage(e.target.files[0].name)
     }
 
     function changeInputNum(e, mode) {

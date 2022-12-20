@@ -18,17 +18,31 @@ export default function ImagePreview(props) {
                 Delete
             </Button>
         )
-        title = <Typography>{props.image}</Typography>
+        title = (
+            <Typography
+                sx={{ maxWidth: '280px', maxHeight: '1.5em', overflow: 'hidden' }}
+            >
+                {props.image}
+            </Typography>
+        )
     }
+    let linkTOimage = PATH_TO_PREVIEW
+    // if (props.image.startsWith('http')) linkTOimage = ''
+    if (/^https?:\/\//.test(props.image)) linkTOimage = ''
+
     return (
         <Box sx={{ display: 'inline-block', textAlign: 'center' }}>
             {title}
             <img
-                src={PATH_TO_PREVIEW + props.image}
+                src={linkTOimage + props.image}
                 width='300px'
                 height='200px'
                 alt='preview'
-                style={{ objectFit: 'cover', marginRight: '6px' }}
+                style={{
+                    objectFit: 'cover',
+                    marginRight: '10px',
+                    border: '1px solid grey',
+                }}
             />
             <br />
             {button}
