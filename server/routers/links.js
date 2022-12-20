@@ -22,6 +22,7 @@ router
     // .get((req, res) => findTagsByFilters(req, res, Link))
     .get((req, res) => BDRequest(req, res, Link, 'find'))
     .post((req, res) => BDRequest(req, res, Link, 'add'))
+    .delete((req, res) => BDRequest(req, res, Link, 'delete'))
     .patch((req, res) => BDRequest(req, res, Link, 'patch'))
 // .post(function (req, res) {
 //     res.send('links post-')

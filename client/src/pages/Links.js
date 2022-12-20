@@ -18,6 +18,8 @@ export default function Links() {
     const locat = useLocation()
     log.debug('Location.state =', locat.state)
 
+    const [forceRerender, setForceRerender] = useState(true)
+
     const [params, setParams] = useSearchParams({})
     const currentTag = params.get('tag')
     log.debug('Params tag =', currentTag)
@@ -82,7 +84,7 @@ export default function Links() {
         ttt()
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [id, currentTag, searchParams])
+    }, [id, currentTag, searchParams, forceRerender])
     log.verbs('--- Start Render -Links-')
     //TODO может сюда добавить кнпоку удаления и редактирования названия тега
     return (
@@ -98,7 +100,13 @@ export default function Links() {
             {links && (
                 <>
                     {links.map((item) => {
-                        return <Link item={item} key={item._id} />
+                        return (
+                            <Link
+                                item={item}
+                                key={item._id}
+                                setForceRerender={setForceRerender}
+                            />
+                        )
                     })}
                 </>
             )}
