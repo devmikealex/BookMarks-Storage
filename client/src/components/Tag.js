@@ -44,9 +44,15 @@ export default function Tag(props) {
         }
     }
 
-    function handleAlertDelete(id) {
+    function handleAlertDelete(item) {
         log.verbs('--- Start function -handleAlertDelete-')
-        toModalAlert('Заголовок', 'Сообщение', handleDelete, id)
+        toModalAlert(
+            `Delete tag "${item.title}"?`,
+            `Confirm removal of tag with ID ${item._id}`,
+            'Delete',
+            handleDelete,
+            item._id
+        )
     }
 
     function handleDelete(id) {
@@ -66,7 +72,7 @@ export default function Tag(props) {
             variant={chosen ? 'outlined' : 'filled'}
             sx={{ m: 0.4 }}
             onClick={handleClick}
-            onDelete={props.deletable ? () => handleAlertDelete(props.item._id) : null}
+            onDelete={props.deletable ? () => handleAlertDelete(props.item) : null}
         />
     )
 }

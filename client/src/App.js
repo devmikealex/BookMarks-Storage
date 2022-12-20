@@ -23,6 +23,7 @@ import { useState } from 'react'
 import UploadFiles from './components/UploadFiles'
 import InfoLog from './components/InfoLog'
 import Context from './common/context'
+import AlertModal from './components/Modal'
 // import Upload-test from './pages/Upload-test'
 
 const log = new WebLogger(null, ' APP', 'white-Coral')
@@ -42,6 +43,8 @@ function App() {
         }
     }
 
+    const [modalOpen, setModalOpen] = useState(false)
+    const [modalInfo, setModalInfo] = useState({})
     /**
      * Показать модальное сообщение
      * @param {string} title Заголовок модального окна
@@ -49,13 +52,16 @@ function App() {
      * @param {function} funcYes Функция для положительного ответа
      * @param {any} args Аргументы для функции
      */
-    function toModalAlert(title, message, funcYes, args) {
+    function toModalAlert(title, message, button, funcYes, args) {
         log.verbs('--- Start function -toModalAlert-')
         log.debug('Title =', title)
         log.debug('Message =', message)
+        log.debug('Button =', button)
         log.debug('args =', args)
 
-        funcYes(args)
+        setModalInfo({ title, message, button, funcYes, args })
+        setModalOpen(true)
+        // funcYes(args)
     }
 
     const themeDark = createTheme({
@@ -82,6 +88,11 @@ function App() {
                 <div className='App'>
                     <Appbar darkMode={darkMode} setDarkMode={setDarkMode} />
                     <Container maxWidth='lg' sx={{ mt: 2 }}>
+                        <AlertModal
+                            open={modalOpen}
+                            setModalOpen={setModalOpen}
+                            modalInfo={modalInfo}
+                        />
                         <InfoLog history={history} />
                         <h2>
                             {process.env.REACT_APP_SERVER} - {process.env.NODE_ENV}

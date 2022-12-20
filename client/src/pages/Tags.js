@@ -47,7 +47,7 @@ export default function Tags(props) {
 
     useEffect(() => {
         log.verbs('Enter to useEffect[]')
-        myFetch_new(null, 'tags' + '?sfield=title&sorder=1', 'GET').then((result) => {
+        myFetch_new(null, 'tags?sfield=title&sorder=1', 'GET').then((result) => {
             log.debug('myFetch result', result)
             setErrorResult(result)
         })
