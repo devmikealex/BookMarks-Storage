@@ -68,8 +68,10 @@ export default function Tag(props) {
     return (
         <Chip
             label={props.item.title}
-            color='success'
-            variant={chosen ? 'outlined' : 'filled'}
+            // color='success'
+            color={chosen ? 'default' : 'success'}
+            // variant={chosen ? 'outlined' : 'filled'}
+            variant='filled'
             sx={{ m: 0.4 }}
             onClick={handleClick}
             onDelete={props.deletable ? () => handleAlertDelete(props.item) : null}

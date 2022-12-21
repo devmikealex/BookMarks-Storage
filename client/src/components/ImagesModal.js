@@ -20,6 +20,7 @@ const style1 = {
 const style = {
     maxWidth: '95%',
     maxHeight: '95%',
+    textAlign: 'center',
     bgcolor: 'background.paper',
     border: '1px solid #000',
     boxShadow: 24,
@@ -82,12 +83,25 @@ export default function ImagesModal(props) {
                     src={linkTOimage + currentImage}
                     onClick={() => selectOtherImage('next')}
                     sx={{
-                        width: '100%',
-                        height: '100%',
+                        // width: '100%',
+                        // height: '100%',
+                        maxWidth: '100%',
+                        height: 'auto',
+                        display: 'block',
+                        margin: '0 auto',
                     }}
                 />
-                <Box>
-                    <Typography variant='body1'>{imagesModal.title}</Typography>
+                <Box
+                // sx={{
+                //     display: 'flex',
+                //     justifyContent: 'space-between',
+                //     flexWrap: 'wrap',
+                //     gap: 2,
+                // }}
+                >
+                    <Typography variant='body1' sx={{ fontWeight: '600' }}>
+                        {imagesModal.title}
+                    </Typography>
                     <Typography variant='body1'>{currentImage}</Typography>
                 </Box>
                 <Box sx={style1}>

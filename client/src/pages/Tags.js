@@ -6,7 +6,7 @@ import EditButton from '../components/EditButton'
 import { myFetch_new } from '../common/fetch'
 import Tag from '../components/Tag'
 import TagsNew from './TagsNew'
-import { Box, Button, Paper, Snackbar } from '@mui/material'
+import { Box, Button, Paper, Snackbar, Typography } from '@mui/material'
 
 import WebLogger from 'mylogger/web-version'
 import AlertInfo from '../components/AlertInfo'
@@ -60,6 +60,11 @@ export default function Tags(props) {
 
     return (
         <Paper variant='outlined' sx={{ p: 2 }}>
+            {deletable && (
+                <Typography variant='h4' sx={{ mb: 1 }}>
+                    Total tags: {tags?.length}
+                </Typography>
+            )}
             <TagsNew
                 setForceRerender={setForceRerender}
                 wrapper={wrapper}
@@ -74,7 +79,14 @@ export default function Tags(props) {
                         // console.log(!!props?.currentTags.includes(item.title))
                         const chosen = !!props?.currentTags?.includes(item.title)
                         return (
-                            <span key={item._id} style={{ display: 'inline-block' }}>
+                            <span
+                                key={item._id}
+                                style={{
+                                    display: 'inline-block',
+                                    // background: 'green',
+                                    // borderRadius: '20px',
+                                }}
+                            >
                                 <Tag
                                     item={item}
                                     // key={item._id}
