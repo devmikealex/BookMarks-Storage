@@ -37,8 +37,10 @@ export default function ImagePreview(props) {
                 src={linkTOimage + props.image}
                 width='300px'
                 height='200px'
-                alt='preview'
+                alt={props.image}
+                onClick={props.onClick}
                 style={{
+                    cursor: 'pointer',
                     objectFit: 'cover',
                     marginRight: '10px',
                     border: '1px solid grey',

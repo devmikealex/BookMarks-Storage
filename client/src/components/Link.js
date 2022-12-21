@@ -25,7 +25,7 @@ const log = new WebLogger(null, 'LINK', 'red')
 export default function Link(props) {
     // const {} = props
 
-    const { toModalAlert } = useContext(Context)
+    const { toModalAlert, toImagesModal } = useContext(Context)
 
     const navigate = useNavigate()
 
@@ -36,6 +36,13 @@ export default function Link(props) {
         // log.debug('---------myFetch result', res)
         const { resultJSON } = res
         log.silly('New clicks', resultJSON.clicks)
+    }
+
+    function handleImageModal(event, item) {
+        log.verbs('--- Start function -handleImageModal-')
+        // console.log('🚀 ~ file: Link.js:42 ~ handleImageModal ~ event', event)
+        // console.log(event.target.alt)
+        toImagesModal(item.title, item.images, event.target.alt)
     }
 
     function handleAlertDelete(item) {
@@ -59,14 +66,6 @@ export default function Link(props) {
             // props.setSnackbar({ message: JSON.stringify(result.json), open: true })
         })
     }
-
-    // function incrementCounter_old(id) {
-    //     log.verbs('--- Start function -incrementCounter-')
-    //     log.debug('id:', id)
-    //     fetch(process.env.REACT_APP_SERVER + '/links/countinc/' + id)
-    //         .then((response) => response.json())
-    //         .then((result) => log.debug('incrementCounter fetch return:', result.clicks))
-    // }
 
     function LinkWithCount(props) {
         return (
@@ -127,25 +126,13 @@ export default function Link(props) {
                 </Box>
                 <Typography>{props.item.description}</Typography>
                 <DateComp item={props.item} />
-                {/* Создано: {new Date(props.item.crt_date).toLocaleString()} <br /> */}
-                {/* Изменено: {new Date(props.item.mod_date).toLocaleString()} <br /> */}
-                {props.item.images.map(
-                    (item) => (
-                        <ImagePreview image={item} key={item} />
-                    )
-                    // {
-                    //     return (
-                    //         <img
-                    //             src={PATH_TO_PREVIEW + item}
-                    //             width='300px'
-                    //             height='200px'
-                    //             alt='preview'
-                    //             key={item}
-                    //             style={{ objectFit: 'cover', marginRight: '4px' }}
-                    //         />
-                    //     )
-                    // }
-                )}
+                {props.item.images.map((item) => (
+                    <ImagePreview
+                        onClick={(e) => handleImageModal(e, props.item)}
+                        image={item}
+                        key={item}
+                    />
+                ))}
             </Box>
         </Paper>
     )

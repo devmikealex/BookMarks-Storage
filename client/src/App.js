@@ -23,7 +23,8 @@ import { useState } from 'react'
 import UploadFiles from './components/UploadFiles'
 import InfoLog from './components/InfoLog'
 import Context from './common/context'
-import AlertModal from './components/Modal'
+import AlertModal from './components/AlertModal'
+import ImagesModal from './components/ImagesModal'
 // import Upload-test from './pages/Upload-test'
 
 const log = new WebLogger(null, ' APP', 'white-Coral')
@@ -41,6 +42,14 @@ function App() {
             setHistory([newLine, ...history])
             //TODO может сделать принудительный ре-рендер
         }
+    }
+
+    const [imagesModalOpen, setImagesModalOpen] = useState(false)
+    const [imagesModal, setImagesModal] = useState({})
+    function toImagesModal(title, images, image) {
+        log.verbs('--- Start function -toImagesModal-')
+        setImagesModal({ title, images, image })
+        setImagesModalOpen(true)
     }
 
     const [modalOpen, setModalOpen] = useState(false)
@@ -82,7 +91,7 @@ function App() {
     })
 
     return (
-        <Context.Provider value={{ toLog, toModalAlert }}>
+        <Context.Provider value={{ toLog, toModalAlert, toImagesModal }}>
             <ThemeProvider theme={darkMode ? themeDark : themeLight}>
                 <CssBaseline />
                 <div className='App'>
@@ -92,6 +101,11 @@ function App() {
                             open={modalOpen}
                             setModalOpen={setModalOpen}
                             modalInfo={modalInfo}
+                        />
+                        <ImagesModal
+                            open={imagesModalOpen}
+                            setImagesModalOpen={setImagesModalOpen}
+                            imagesModal={imagesModal}
                         />
                         <InfoLog history={history} />
                         <h2>
