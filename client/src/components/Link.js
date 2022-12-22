@@ -91,6 +91,12 @@ export default function Link(props) {
                         {props.item.title}
                     </Typography>
                 </LinkWithCount>
+                {props.item.score && (
+                    <Typography component='span' color='error'>
+                        {' '}
+                        ({props.item.score})
+                    </Typography>
+                )}
                 <CopyButton />
                 <EditButton item={props.item} />
                 <IconButton

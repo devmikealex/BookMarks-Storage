@@ -43,6 +43,9 @@ export default function TagsNew(props) {
                         // margin='dense'
                         inputRef={myInputRef}
                         sx={{ width: '100%' }}
+                        onKeyUp={(e) => {
+                            if (e.key === 'Enter') Send()
+                        }}
                     />
                     <Button
                         variant={buttonType}

@@ -31,6 +31,9 @@ router
 router.post('/filters', (req, res) => BDRequest(req, res, Link, 'find'))
 // router.post('/filters', (req, res) => findTagsByFilters(req, res, Link))
 
+// NOT IMPLEMENTED
+router.post('/search', (req, res) => BDRequest(req, res, Link, 'search'))
+
 router.get('/countinc/:id', (req, res) => {
     log.debug(clc.cyan('countinc ID processing, req.params ='), req.params)
     Link.findByIdAndUpdate(

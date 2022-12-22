@@ -34,7 +34,8 @@ async function BDRequest(req, res, BD, mode) {
                 // query = BD.find(data)
                 // if (BD === Link) query = query.populate('tags')
                 // result = await query.exec()
-                query = BD.find(data)
+                if (!Array.isArray(data)) data = [data]
+                query = BD.find(...data)
                 //TODO получить инфу через params......
                 const limit = req.query.limit ?? 0
                 log.debug('limit:', limit)
@@ -90,11 +91,18 @@ async function BDRequest(req, res, BD, mode) {
                         JSON.stringify(result, null, 2)
                 )
                 break
+            case 'search':
+                log.verbs(c.brightYellow + 'Enter "search" mode')
+                log.debug('Data for BD:', data)
+                // log.error('- - - NOT IMPLEMENTED - - -')
+                throw new Error('NOT IMPLEMENTED')
+                break
             default:
                 break
         }
         message = result
         colorMessage = '--- OK from ' + c.cyan + FUNC_NAME
+        //TODO пофиксить вывод объектов - tags: [ [Object], [Object], [Object] ]
         log.silly('Message for return = \r\n', message)
         logType = 'verbs'
     } catch (err) {

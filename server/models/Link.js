@@ -50,4 +50,6 @@ const linkSchema = new mongoose.Schema(
 //     next()
 // })
 
+linkSchema.index({ title: 'text', description: 'text' })
+
 module.exports = mongoose.model('Link', linkSchema)
