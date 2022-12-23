@@ -45,6 +45,9 @@ export default function HttpFiles(props) {
                     id={INPUT_NAME + i}
                     name={'uploadhttp' + i}
                     onChange={changeImage}
+                    onKeyPress={(e) => {
+                        e.key === 'Enter' && e.preventDefault()
+                    }}
                 />
                 <img
                     hidden

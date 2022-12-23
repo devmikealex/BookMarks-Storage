@@ -2,15 +2,19 @@ import { Box, Button, Modal, Typography } from '@mui/material'
 import WebLogger from 'mylogger/web-version'
 import { useEffect, useRef, useState } from 'react'
 
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
+
 const log = new WebLogger(null, 'MODAL', 'blue')
 
 const PATH_TO_PREVIEW = process.env.REACT_APP_SERVER + '/static/images/'
 
 const style1 = {
     position: 'absolute',
-    top: '95%',
+    // top: '95%',
+    bottom: '1.5%',
     left: '50%',
-    transform: 'translate(-50%, -50%)',
+    transform: 'translate(-50%, 0)',
     bgcolor: 'background.paper',
     border: '1px solid #000',
     boxShadow: 24,
@@ -106,13 +110,13 @@ export default function ImagesModal(props) {
                 </Box>
                 <Box sx={style1}>
                     <Button size='small' onClick={() => selectOtherImage('prev')}>
-                        &lt;
+                        <ArrowBackIcon />
                     </Button>
                     <Button size='small' onClick={() => setImagesModalOpen(false)}>
                         &#10006;
                     </Button>
                     <Button size='small' onClick={() => selectOtherImage('next')}>
-                        &gt;
+                        <ArrowForwardIcon />
                     </Button>
                 </Box>
             </Box>

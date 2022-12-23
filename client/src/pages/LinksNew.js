@@ -56,6 +56,7 @@ export default function LinksNew() {
     async function Send(e) {
         log.verbs('--- Start function -Send-')
         e.preventDefault()
+        console.log('🚀 ~ file: LinksNew.js:59 ~ Send ~ e', e)
 
         const res = await myFetch_new(null, 'tags', 'GET')
         log.debug('---------myFetch result', res)
@@ -134,6 +135,9 @@ export default function LinksNew() {
                     onChange={(e) => {
                         setTitleValue(e.target.value)
                     }}
+                    onKeyPress={(e) => {
+                        e.key === 'Enter' && e.preventDefault()
+                    }}
                     InputLabelProps={{ shrink: titleValue.value }}
                     inputProps={{ style: { fontSize: 30 } }}
                 />
@@ -146,6 +150,9 @@ export default function LinksNew() {
                         name='url'
                         id='inp-url'
                         // margin='dense'
+                        onKeyPress={(e) => {
+                            e.key === 'Enter' && e.preventDefault()
+                        }}
                         sx={{ width: '100%' }}
                     />
                     <Button
@@ -185,6 +192,9 @@ export default function LinksNew() {
                     margin='dense'
                     onChange={(e) => {
                         setDecriptionValue(e.target.value)
+                    }}
+                    onKeyPress={(e) => {
+                        e.key === 'Enter' && e.preventDefault()
                     }}
                     InputLabelProps={{ shrink: decriptionValue.value }}
                     inputProps={{ style: { fontSize: '1.5em', lineHeight: '1.3em' } }}

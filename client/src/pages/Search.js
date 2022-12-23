@@ -5,6 +5,8 @@ import { useSearchParams } from 'react-router-dom'
 import Context from '../common/context'
 import { myFetch_new } from '../common/fetch'
 import Link from '../components/Link'
+import LinkShort from '../components/LinkShort'
+import serialize from 'serialize-javascript'
 
 const log = new WebLogger(null, 'SEARCH', 'blue')
 
@@ -55,11 +57,21 @@ export default function Search(props) {
                 >
                     Search RegExp
                 </Button>
+                <Button
+                    variant='contained'
+                    fullWidth
+                    onClick={(e) => {
+                        fastSearch(q.get('q'))
+                    }}
+                >
+                    Search fast
+                </Button>
             </Paper>
             {links && (
                 <>
                     {links.map((item) => {
-                        return <Link item={item} key={item._id} score={item.score} />
+                        // return <Link item={item} key={item._id} score={item.score} />
+                        return <LinkShort item={item} key={item._id} />
                     })}
                 </>
             )}
@@ -85,7 +97,24 @@ export default function Search(props) {
                 { description: new RegExp(search, 'gi') },
             ],
         }
-        const res = await myFetch_new(obj, 'links/filters', 'POST')
+        const objSer = serialize(obj)
+        const res = await myFetch_new({ objSer }, 'links/filters', 'POST')
+        log.debug('---------myFetch result', res)
+        const { errorFetch, json: links } = res
+        toLog(errorFetch)
+        setLinks(links)
+    }
+
+    async function fastSearch(search) {
+        const obj1 = {
+            $or: [
+                { title: new RegExp(search, 'gi') },
+                { description: new RegExp(search, 'gi') },
+            ],
+        }
+        const obj2 = { title: 1 }
+        const objSer = serialize([obj1, obj2])
+        const res = await myFetch_new({ objSer }, 'links/filters', 'POST')
         log.debug('---------myFetch result', res)
         const { errorFetch, json: links } = res
         toLog(errorFetch)

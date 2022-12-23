@@ -10,6 +10,12 @@
 
 ---
 
+### [api-query-params - npm](https://www.npmjs.com/package/api-query-params)
+
+Convert query parameters from API urls to MongoDB queries (advanced querying, filtering, sorting, …)
+
+---
+
 ### [Snippets info vscode-react](https://github.com/ults-io/vscode-react-javascript-snippets/blob/HEAD/docs/Snippets.md)
 
 ```js

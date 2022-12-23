@@ -3,7 +3,7 @@ import { Box } from '@mui/system'
 export default function DateComp({ item }) {
     let date1 = (
         <div>
-            Создано: {new Date(item.crt_date).toLocaleString()} <br />
+            Created: {new Date(item.crt_date).toLocaleString()} <br />
         </div>
     )
     const newdate = item.mod_date.slice(0, 16)
@@ -12,7 +12,7 @@ export default function DateComp({ item }) {
     if (newdate !== oldDate)
         date2 = (
             <div>
-                Изменено: {new Date(item.mod_date).toLocaleString()} <br />
+                Changed: {new Date(item.mod_date).toLocaleString()} <br />
             </div>
         )
 

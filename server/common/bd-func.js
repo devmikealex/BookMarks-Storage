@@ -1,3 +1,4 @@
+const serialize = require('serialize-javascript')
 const clc = require('cli-color')
 
 const c = require('mylogger/colors')
@@ -34,7 +35,18 @@ async function BDRequest(req, res, BD, mode) {
                 // query = BD.find(data)
                 // if (BD === Link) query = query.populate('tags')
                 // result = await query.exec()
-                if (!Array.isArray(data)) data = [data]
+                // if (typeof data === 'string' || data instanceof String)
+                if (data.hasOwnProperty('objSer')) {
+                    log.debug(c.brightYellow + 'Deserialize data')
+                    data = deserialize(data.objSer)
+                }
+                if (!Array.isArray(data)) {
+                    log.debug(c.brightYellow + 'Convert data to array [data]')
+                    data = [data]
+                }
+
+                log.debug(c.brightCyan + 'Data for BD final', data)
+
                 query = BD.find(...data)
                 //TODO получить инфу через params......
                 const limit = req.query.limit ?? 0
@@ -49,12 +61,12 @@ async function BDRequest(req, res, BD, mode) {
                 if (BD === Link) query = query.populate('tags')
                 result = await query.exec()
 
-                log.debug(
-                    clc.bold('BD.find') +
-                        ' returned: \r\n' +
-                        c.brightBlue +
-                        JSON.stringify(result, null, 2)
-                )
+                // log.debug(
+                //     clc.bold('BD.find') +
+                //         ' returned: \r\n' +
+                //         c.brightBlue +
+                //         JSON.stringify(result, null, 2)
+                // )
                 log.info(clc.bold('BD.find') + ` length = ${result.length}`)
                 break
             case 'add':
@@ -103,7 +115,7 @@ async function BDRequest(req, res, BD, mode) {
         message = result
         colorMessage = '--- OK from ' + c.cyan + FUNC_NAME
         //TODO пофиксить вывод объектов - tags: [ [Object], [Object], [Object] ]
-        log.silly('Message for return = \r\n', message)
+        // log.silly('Message for return = \r\n', message)
         logType = 'verbs'
     } catch (err) {
         res.status(500)
@@ -202,3 +214,10 @@ async function createTags(req, res, BD) {
 // exports.findTagsByFilters = findTagsByFilters
 // exports.createTags = createTags
 exports.BDRequest = BDRequest
+
+function deserialize(serializedJavascript) {
+    log.verbs('--- Start func ' + c.cyan + 'deserialize')
+    const res = eval('(' + serializedJavascript + ')')
+    log.verbs('Return =', res)
+    return res
+}
