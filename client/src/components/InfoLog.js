@@ -1,6 +1,6 @@
 // import './InfoLog.css'
 
-import { IconButton, Paper, Snackbar } from '@mui/material'
+import { Divider, IconButton, Paper, Snackbar } from '@mui/material'
 import { useEffect, useState } from 'react'
 import CloseIcon from '@mui/icons-material/Close'
 
@@ -49,7 +49,8 @@ export default function InfoLog(props) {
                     })}
                 </ul>
             </Paper>
-            <hr />
+            {/* <hr /> */}
+            <Divider />
             <Snackbar
                 open={open}
                 onClose={handleClose}

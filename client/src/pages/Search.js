@@ -1,7 +1,16 @@
-import { Button, Paper, TextField, Typography } from '@mui/material'
+import {
+    Button,
+    Divider,
+    List,
+    ListItem,
+    ListItemButton,
+    Paper,
+    TextField,
+    Typography,
+} from '@mui/material'
 import WebLogger from 'mylogger/web-version'
 import { useContext, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import Context from '../common/context'
 import { myFetch_new } from '../common/fetch'
 import Link from '../components/Link'
@@ -12,6 +21,8 @@ const log = new WebLogger(null, 'SEARCH', 'blue')
 
 export default function Search(props) {
     const { toLog } = useContext(Context)
+
+    const navigate = useNavigate()
 
     const [q, setQ] = useSearchParams({ q: 'Кинопоиск' })
 
@@ -68,12 +79,23 @@ export default function Search(props) {
                 </Button>
             </Paper>
             {links && (
-                <>
+                <List sx={{ bgcolor: 'background.paper' }}>
                     {links.map((item) => {
                         // return <Link item={item} key={item._id} score={item.score} />
-                        return <LinkShort item={item} key={item._id} />
+                        return (
+                            <>
+                                <ListItemButton
+                                    onClick={() => navigate('/links/' + item._id)}
+                                    key={item._id}
+                                    sx={{ paddingY: 0.5 }}
+                                >
+                                    <LinkShort item={item} key={item._id} />
+                                </ListItemButton>
+                                <Divider />
+                            </>
+                        )
                     })}
-                </>
+                </List>
             )}
         </>
     )

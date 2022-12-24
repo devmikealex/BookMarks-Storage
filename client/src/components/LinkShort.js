@@ -56,9 +56,7 @@ export default function Link(props) {
         // <Paper variant='outlined' sx={{ m: 2, boxShadow: 3 }}>
         <Box sx={{ p: 0 }}>
             <Ahref to={'/links/' + props.item._id} underline='hover' component={RRLink}>
-                <Typography variant='h6' component='span'>
-                    {props.item.title}
-                </Typography>
+                <Typography component='span'>{props.item.title}</Typography>
             </Ahref>
             <br />
             <Box>
