@@ -18,6 +18,7 @@ export default function Tag(props) {
     log.debug('Start chosen =', chosen)
 
     function handleClick(e) {
+        e.stopPropagation()
         const a = document.getElementById('inp-tags')
         if (a) {
             let newValue = a.value
@@ -65,9 +66,12 @@ export default function Tag(props) {
         })
     }
 
+    const label = props.item.title + (props.deletable ? ' - ' + props.item.counter : '')
+
     return (
         <Chip
-            label={props.item.title}
+            // label={`${props.item.title} (${props.deletable ? props.item.counter : ''})`}
+            label={label}
             // color='success'
             color={chosen ? 'default' : 'success'}
             // variant={chosen ? 'outlined' : 'filled'}

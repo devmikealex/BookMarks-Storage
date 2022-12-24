@@ -14,6 +14,9 @@ export default function Navbar() {
                     )
                 })}
                 <li>
+                    <Link to='/tags?sfield=counter&sorder=-1'>Tag sort by count</Link>
+                </li>
+                <li>
                     <Link to='/tags/12345'>Tag id 12345</Link>
                 </li>
                 <li>
@@ -30,6 +33,11 @@ export default function Navbar() {
                 <li>
                     <a href={`${process.env.REACT_APP_SERVER}/tags/createTestTags`}>
                         createTestTags
+                    </a>
+                </li>
+                <li>
+                    <a href={`${process.env.REACT_APP_SERVER}/tags/synccounters`}>
+                        synccounters
                     </a>
                 </li>
             </ul>

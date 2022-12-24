@@ -55,11 +55,13 @@ export default function Appbar(props) {
                         <CollectionsBookmarkIcon />
                     </Button>
 
-                    <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
-                        BookMarks Storage
+                    <Typography variant='h6' component='div'>
+                        BookMarks
                     </Typography>
 
                     <SearchField />
+
+                    {/* <Typography sx={{ flexGrow: 1 }}> </Typography> */}
 
                     <Button component={RRLink} to='/links/new' color='inherit'>
                         <AddIcon />

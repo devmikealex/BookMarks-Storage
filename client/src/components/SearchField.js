@@ -26,7 +26,7 @@ const Search = styled('div')(({ theme }) => ({
 }))
 
 const SearchIconWrapper = styled('div')(({ theme }) => ({
-    padding: theme.spacing(0, 2),
+    padding: theme.spacing(0, 1),
     height: '100%',
     position: 'absolute',
     pointerEvents: 'none',
@@ -41,15 +41,15 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
         padding: theme.spacing(1, 1, 1, 0),
         // vertical padding + font size from searchIcon
         paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-        transition: theme.transitions.create('width'),
+        // transition: theme.transitions.create('width'),
         width: '100%',
-        [theme.breakpoints.up('sm')]: {
-            width: '14ch',
-            // width: '12ch',
-            // '&:focus': {
-            //     width: '20ch',
-            // },
-        },
+        // [theme.breakpoints.up('sm')]: {
+        // width: '14ch',
+        // width: '12ch',
+        // '&:focus': {
+        //     width: '20ch',
+        // },
+        // },
     },
 }))
 
@@ -78,6 +78,7 @@ export default function SearchField() {
             $or: [
                 { title: new RegExp(search, 'gi') },
                 { description: new RegExp(search, 'gi') },
+                { url: new RegExp(search, 'gi') },
             ],
         }
         const obj2 = { title: 1 }
@@ -89,7 +90,7 @@ export default function SearchField() {
         setLinks(links)
     }
     return (
-        <Search sx={{ position: 'relative' }}>
+        <Search sx={{ position: 'relative', flexGrow: 1 }}>
             <SearchIconWrapper>
                 <SearchIcon />
             </SearchIconWrapper>
@@ -106,7 +107,9 @@ export default function SearchField() {
                     }
                 }}
                 onBlur={() => {
-                    setIsFocused(false)
+                    setTimeout(() => {
+                        setIsFocused(false)
+                    }, 200)
                 }}
                 onFocus={() => {
                     setTimeout(() => {
@@ -115,6 +118,7 @@ export default function SearchField() {
                 }}
                 placeholder='Search…'
                 inputProps={{ 'aria-label': 'search' }}
+                sx={{ width: '100%' }}
             />
             {links && isFocused && (
                 <List
@@ -123,11 +127,11 @@ export default function SearchField() {
                         position: 'absolute',
                         p: 0,
                         borderRadius: 1,
-                        // width: '100%',
+                        width: '100%',
                         // left: '-100px',
                         // width: '500px',
                         // left: '-20vw',
-                        width: '40vw',
+                        // maxWidth: '60vw',
                         boxShadow: 6,
                     }}
                 >

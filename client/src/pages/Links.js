@@ -8,6 +8,7 @@ import Context from '../common/context'
 import Tag from '../components/Tag'
 import { Typography } from '@mui/material'
 import EditButton from '../components/EditButton'
+import queryParams from '../common/queryParams'
 const log = new WebLogger(null, 'LINKS', 'green')
 
 export default function Links() {
@@ -24,19 +25,21 @@ export default function Links() {
     const currentTag = params.get('tag')
     log.debug('Params tag =', currentTag)
 
-    let paramsToServer = []
-    const limit = params.get('limit')
-    log.debug('Params limit =', limit)
-    if (limit) paramsToServer.push('limit=' + limit)
-    const sortField = params.get('sfield')
-    log.debug('Params sortField (sfield) =', sortField)
-    if (sortField) paramsToServer.push('sfield=' + sortField)
-    const sortOrder = params.get('sorder')
-    log.debug('Params sortOrder (sorder) =', sortOrder)
-    if (sortOrder) paramsToServer.push('sorder=' + sortOrder)
-    let searchParams = ''
-    if (paramsToServer.length) searchParams = '?' + paramsToServer.join('&')
-    log.debug('New searchParams =', searchParams)
+    // let paramsToServer = []
+    // const limit = params.get('limit')
+    // log.debug('Params limit =', limit)
+    // if (limit) paramsToServer.push('limit=' + limit)
+    // const sortField = params.get('sfield')
+    // log.debug('Params sortField (sfield) =', sortField)
+    // if (sortField) paramsToServer.push('sfield=' + sortField)
+    // const sortOrder = params.get('sorder')
+    // log.debug('Params sortOrder (sorder) =', sortOrder)
+    // if (sortOrder) paramsToServer.push('sorder=' + sortOrder)
+    // let searchParams = ''
+    // if (paramsToServer.length) searchParams = '?' + paramsToServer.join('&')
+    // log.debug('New searchParams =', searchParams)
+
+    const searchParams = queryParams(params)
 
     const { id } = useParams()
     log.debug('id =', id)
@@ -95,7 +98,9 @@ export default function Links() {
                 {currentTag && (
                     <EditButton tag item={tagObj.current} sx={{ left: -5, top: 0 }} />
                 )}
+                {currentTag && tagObj.current.counter}
             </Typography>
+            {currentTag && tagObj.current._id}
             {id && <p>ID={id}</p>}
             {links && (
                 <>

@@ -10,6 +10,7 @@ const Logger = require('mylogger')
 const log = new Logger(undefined, 'TAGS', c.cyan)
 
 const Tag = require('../models/Tag')
+const Link = require('../models/Link')
 
 // middleware that is specific to this router
 router.use(function timeLog(req, res, next) {
@@ -27,6 +28,43 @@ router
 router.post('/filters', (req, res) => BDRequest(req, res, Tag, 'find'))
 
 router.use('/createTestTags', (req, res) => createTestTags(req, res))
+
+router.get('/synccounters', (req, res) => {
+    log.debug(clc.cyan('SYNC COUNTER processing, req.params ='), req.params)
+    async function a() {
+        // получить список всеъ тегов
+        const allTags = await Tag.find({})
+        log.info(clc.bold('Tag.find') + ` length = ${allTags.length}`)
+        // для каждого тега запрсоить поиск и получить длину найденеого массива
+        let info = []
+        for (let index = 0; index < allTags.length; index++) {
+            const tag = allTags[index]
+            log.debug(`${tag.title} - old: ${tag.counter}`)
+            const tagsLinks = await Link.find({ tags: tag._id }, { _id: 1, title: 1 })
+            console.log(tagsLinks)
+            log.debug(`New: ${tagsLinks.length}`)
+            console.log('--------------------------------')
+            // сделать апдейт поля counter для текущцего тега
+            Tag.findByIdAndUpdate(
+                tag._id,
+                { counter: tagsLinks.length },
+                // { new: true },
+                function (err, doc) {
+                    if (err) {
+                        log.error(err)
+                        // res.send(err.message)
+                    } else {
+                        log.silly('Updated Link: ', doc)
+                        // res.send(doc)
+                    }
+                    info.push(doc)
+                }
+            )
+        }
+        res.json(info)
+    }
+    a()
+})
 
 router.get('/:id', (req, res) => {
     log.debug(clc.cyan('ID processing, req.params ='), req.params)

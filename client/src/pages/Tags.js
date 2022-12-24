@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom'
+import { useParams, useSearchParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 
 import EditButton from '../components/EditButton'
@@ -10,12 +10,18 @@ import { Box, Button, Paper, Snackbar, Typography } from '@mui/material'
 
 import WebLogger from 'mylogger/web-version'
 import AlertInfo from '../components/AlertInfo'
+import queryParams from '../common/queryParams'
 const log = new WebLogger(null, 'TAGS', 'blue')
 
 export default function Tags(props) {
     log.verbs('--- Start function Tags')
 
     const [snackbar, setSnackbar] = useState({ message: '', open: false })
+
+    const [params, setParams] = useSearchParams({})
+    log.debug('Params =', params)
+    const defaultParams = { sfield: 'title', sorder: 1 }
+    const searchParams = queryParams(params, defaultParams)
 
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
@@ -47,11 +53,12 @@ export default function Tags(props) {
 
     useEffect(() => {
         log.verbs('Enter to useEffect[]')
-        myFetch_new(null, 'tags?sfield=title&sorder=1', 'GET').then((result) => {
+        // myFetch_new(null, 'tags?sfield=title&sorder=1', 'GET').then((result) => {
+        myFetch_new(null, 'tags' + searchParams, 'GET').then((result) => {
             log.debug('myFetch result', result)
             setErrorResult(result)
         })
-    }, [id, forceRerender])
+    }, [id, forceRerender, params])
     log.verbs('--- Start Render Tags')
 
     //TODO пометить существующие теги для редактирования props.currentTags 'тег1, тег2, тег3'
