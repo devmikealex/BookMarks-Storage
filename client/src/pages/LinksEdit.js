@@ -5,7 +5,7 @@ import { myFetch_new } from '../common/fetch'
 import WebLogger from 'mylogger/web-version'
 import Tags from './Tags'
 import UploadFiles, { submitFiles } from '../components/UploadFiles'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import Link from '../components/Link'
 import Context from '../common/context'
 import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom'
@@ -38,6 +38,11 @@ export default function LinksEdit() {
     const handleChange = (event) => {
         setTagsValue(event.target.value)
     }
+
+    const oldTagsID = useRef()
+    useEffect(() => {
+        oldTagsID.current = item.tags.map((item) => item._id)
+    }, [])
 
     // const [imagesValue, setImagesValue] = useState(item.images.join(', '))
     // const handleChangeImages = (event) => {
@@ -134,6 +139,33 @@ export default function LinksEdit() {
             // setErrorResult(result)
             toLog(result.error)
 
+            if (!result.error) {
+                const newTagsIDarr = tagsID
+                const oldTagsIDarr = oldTagsID.current
+
+                const tagsIDforDEC = oldTagsIDarr.filter(
+                    (tagID) => !newTagsIDarr.includes(tagID)
+                )
+                const tagsIDforINC = newTagsIDarr.filter(
+                    (tagID) => !oldTagsIDarr.includes(tagID)
+                )
+
+                tagsIDforINC.forEach((tagID) => {
+                    myFetch_new(null, 'tags/counters/inc/' + tagID, 'GET').then(
+                        (result) => {
+                            log.debug('Counters INC:', result)
+                        }
+                    )
+                })
+                tagsIDforDEC.forEach((tagID) => {
+                    myFetch_new(null, 'tags/counters/dec/' + tagID, 'GET').then(
+                        (result) => {
+                            log.debug('Counters DEC:', result)
+                        }
+                    )
+                })
+            }
+
             navigate('/links/' + item._id)
         })
     }
@@ -191,6 +223,7 @@ export default function LinksEdit() {
                     id='inp-tags'
                     margin='dense'
                     multiline
+                    disabled
                     maxRows={4}
                     onChange={handleChange}
                     // TODO Check this shrink value

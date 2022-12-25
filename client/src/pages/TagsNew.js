@@ -45,8 +45,25 @@ export default function TagsNew(props) {
                         sx={{ width: '100%' }}
                         onKeyUp={(e) => {
                             if (e.key === 'Enter') Send()
+                            if (e.key === 'Escape') {
+                                e.target.value = ''
+                                props.setFilter('')
+                            }
+                        }}
+                        onChange={(e) => {
+                            props.setFilter(e.target.value)
                         }}
                     />
+                    <Button
+                        variant={buttonType}
+                        // sx={{ flexShrink: 0 }}
+                        onClick={(e) => {
+                            myInputRef.current.value = ''
+                            props.setFilter('')
+                        }}
+                    >
+                        &#10006;
+                    </Button>
                     <Button
                         variant={buttonType}
                         endIcon={<AddIcon />}

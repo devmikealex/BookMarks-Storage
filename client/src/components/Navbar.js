@@ -36,7 +36,7 @@ export default function Navbar() {
                     </a>
                 </li>
                 <li>
-                    <a href={`${process.env.REACT_APP_SERVER}/tags/synccounters`}>
+                    <a href={`${process.env.REACT_APP_SERVER}/tags/counters/sync`}>
                         synccounters
                     </a>
                 </li>

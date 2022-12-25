@@ -108,6 +108,16 @@ export default function LinksNew() {
             log.debug('New link ID', result.json[0]._id)
             navigate('/links/' + result.json[0]._id)
 
+            if (!result.error) {
+                tagsID.forEach((tagID) => {
+                    myFetch_new(null, 'tags/counters/inc/' + tagID, 'GET').then(
+                        (result) => {
+                            log.debug('Counters INC:', result)
+                        }
+                    )
+                })
+            }
+
             // const { errorFetch, resultJSON } = result
             // if (errorFetch) {
             //     setError(resultJSON)
@@ -205,6 +215,7 @@ export default function LinksNew() {
                     label='Tags'
                     name='tags'
                     id='inp-tags'
+                    disabled
                     margin='dense'
                     multiline
                     maxRows={4}
@@ -218,7 +229,11 @@ export default function LinksNew() {
                     InputLabelProps={{ shrink: tagsValue.value }}
                     // onChange={() => {}}
                 />
-                <Tags setTagsValue={setTagsValue} buttonType='outlined' />
+                <Tags
+                    setTagsValue={setTagsValue}
+                    currentTags={tagsValue}
+                    buttonType='outlined'
+                />
                 {/* <TextField
                     fullWidth
                     label='Previews'

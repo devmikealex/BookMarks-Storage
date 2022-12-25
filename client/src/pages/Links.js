@@ -66,6 +66,7 @@ export default function Links() {
                 if (locat.state) {
                     tagID = locat.state._id
                     tagObj.current = locat.state
+                    locat.state = null
                     log.debug('Set tagID from locat.state', tagID)
                 } else {
                     tagObj.current = await getTagbyID(currentTag)

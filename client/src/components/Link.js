@@ -58,12 +58,23 @@ export default function Link(props) {
 
     function handleDelete(id) {
         log.verbs('--- Start function -handleDelete-')
-        log.debug('Tag ID for delete =', id)
+        log.debug('Link ID for delete =', id)
         myFetch_new({ _id: id }, 'links', 'DELETE').then((result) => {
             log.debug('myFetch result', result)
             // navigate('/links/' + id)
-            props.setForceRerender(id)
             // props.setSnackbar({ message: JSON.stringify(result.json), open: true })
+            if (!result.error) {
+                const tags = props.item.tags
+                tags.forEach((tag) => {
+                    myFetch_new(null, 'tags/counters/dec/' + tag._id, 'GET').then(
+                        (result) => {
+                            log.debug('Counters DEC:', result)
+                            props.setForceRerender(result)
+                        }
+                    )
+                })
+            }
+            props.setForceRerender(id)
         })
     }
 

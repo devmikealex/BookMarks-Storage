@@ -37,6 +37,9 @@ export default function Tags(props) {
     log.debug('Start errorResult =', errorResult)
     const tags = errorResult.json
 
+    const [filter, setFilter] = useState('')
+    log.silly('Start filter =', filter)
+
     // const [error, setError] = useState(null)
     // log.debug('Start error =', error)
     // const [tags, setTags] = useState(null)
@@ -74,6 +77,7 @@ export default function Tags(props) {
             )}
             <TagsNew
                 setForceRerender={setForceRerender}
+                setFilter={setFilter}
                 wrapper={wrapper}
                 buttonType={props.buttonType}
             />
@@ -81,6 +85,8 @@ export default function Tags(props) {
             {tags && (
                 <Box sx={{ flexDirection: 'row', pt: 2 }}>
                     {tags.map((item) => {
+                        if (!item.title.toLowerCase().includes(filter.toLowerCase()))
+                            return null
                         // console.log(props?.currentTags)
                         // console.log(props?.currentTags?.includes(item.title))
                         // console.log(!!props?.currentTags.includes(item.title))
