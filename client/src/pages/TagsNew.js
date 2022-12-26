@@ -37,7 +37,7 @@ export default function TagsNew(props) {
                         size='small'
                         // fullWidth
                         // required
-                        label='Tag'
+                        label='Filter / New Tag'
                         name='tag'
                         id='inp-tag'
                         // margin='dense'

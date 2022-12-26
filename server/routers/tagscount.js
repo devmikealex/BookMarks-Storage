@@ -18,13 +18,20 @@ router.get('/sync', (req, res) => {
         log.info(clc.bold('Tag.find') + ` length = ${allTags.length}`)
         // для каждого тега запрсоить поиск и получить длину найденеого массива
         let info = []
+        let matchError = 0
         for (let index = 0; index < allTags.length; index++) {
             const tag = allTags[index]
             const res = await updateTag(tag)
-            if (tag.counter !== res.counter) log.error(c.brightRed + 'DOES NOT MATCH')
-            info.push(res)
-            console.log('==========================================')
+            if (tag.counter !== res.counter) {
+                matchError++
+                log.error(c.brightRed + 'DOES NOT MATCH')
+            }
+            const newObj = res.toObject()
+            newObj.old = tag.counter
+            info.push(newObj)
+//            console.log('==========================================')
         }
+        info.push({ matchError })
         res.json(info)
     }
     a()

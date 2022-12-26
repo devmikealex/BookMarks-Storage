@@ -39,10 +39,10 @@ export default function LinksEdit() {
         setTagsValue(event.target.value)
     }
 
-    const oldTagsID = useRef()
-    useEffect(() => {
-        oldTagsID.current = item.tags.map((item) => item._id)
-    }, [])
+    // const oldTagsID = useRef()
+    // useEffect(() => {
+    //     oldTagsID.current = item.tags.map((item) => item._id)
+    // }, [])
 
     // const [imagesValue, setImagesValue] = useState(item.images.join(', '))
     // const handleChangeImages = (event) => {
@@ -141,7 +141,8 @@ export default function LinksEdit() {
 
             if (!result.error) {
                 const newTagsIDarr = tagsID
-                const oldTagsIDarr = oldTagsID.current
+                // const oldTagsIDarr = oldTagsID.current
+                const oldTagsIDarr = item.tags.map((item) => item._id)
 
                 const tagsIDforDEC = oldTagsIDarr.filter(
                     (tagID) => !newTagsIDarr.includes(tagID)
