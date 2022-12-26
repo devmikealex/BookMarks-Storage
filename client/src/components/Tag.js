@@ -24,6 +24,7 @@ export default function Tag(props) {
             let newValue = a.value
             const newTag = e.target.textContent
             let arr = newValue.split(', ')
+            console.log('🚀 ~ file: Tag.js:27 ~ handleClick ~ arr', arr)
             if (newValue.includes(newTag)) {
                 setChosen(false)
                 const index = arr.indexOf(newTag)
@@ -32,8 +33,11 @@ export default function Tag(props) {
                 }
             } else {
                 setChosen(true)
-                if (!arr[0]) arr = []
+                // if (!arr[0] && !arr.length) arr = []
+                // удаление пустых строк "" из массива
+                arr = arr.filter((n) => n.trim())
                 arr.push(newTag)
+                console.log('🚀 ~ file: Tag.js:39 ~ handleClick ~ arr', arr)
             }
             newValue = arr.join(', ')
             props.setTagsValue(newValue)

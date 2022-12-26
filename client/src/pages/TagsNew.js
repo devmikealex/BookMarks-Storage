@@ -43,8 +43,13 @@ export default function TagsNew(props) {
                         // margin='dense'
                         inputRef={myInputRef}
                         sx={{ width: '100%' }}
+                        onKeyPress={(e) => {
+                            e.key === 'Enter' && e.preventDefault()
+                        }}
                         onKeyUp={(e) => {
-                            if (e.key === 'Enter') Send()
+                            if (e.key === 'Enter') {
+                                Send()
+                            }
                             if (e.key === 'Escape') {
                                 e.target.value = ''
                                 props.setFilter('')
@@ -75,7 +80,7 @@ export default function TagsNew(props) {
                     </Button>
                 </Box>
             </div>
-            <AlertInfo errorResult={errorResult} goodMessage='New tag added.' />
+            {/* <AlertInfo errorResult={errorResult} goodMessage='New tag added.' /> */}
         </>
     )
     if (wrapper) {
@@ -94,10 +99,19 @@ export default function TagsNew(props) {
         const newTag = [{ title: myInputRef.current.value }]
         myFetch_new(newTag, 'tags', 'POST').then((result) => {
             log.debug('myFetch result', result)
-            setErrorResult(result)
-            toLog(result.error)
+            // setErrorResult(result)
             props.setForceRerender(myInputRef.current.value)
-            myInputRef.current.value = ''
+
+            if (!result.error) {
+                const inpTags = document.getElementById('inp-tags')
+                const divider = inpTags.value.trim() === '' ? '' : ', '
+                props.setTagsValue(inpTags.value + divider + myInputRef.current.value)
+                // TODO добавить новый тег в поле
+                myInputRef.current.value = ''
+                props.setFilter('')
+            } else {
+                toLog(result.error)
+            }
         })
 
         log.verbs('--- Exit function Send')

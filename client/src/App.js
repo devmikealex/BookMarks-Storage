@@ -97,6 +97,7 @@ function App() {
                 <div className='App'>
                     <Appbar darkMode={darkMode} setDarkMode={setDarkMode} />
                     <Container maxWidth='lg' sx={{ mt: 2 }}>
+                        {/* TODO AlertModal это все еще нужно??? */}
                         <AlertModal
                             open={modalOpen}
                             setModalOpen={setModalOpen}

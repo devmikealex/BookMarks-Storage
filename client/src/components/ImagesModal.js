@@ -4,6 +4,9 @@ import { useEffect, useRef, useState } from 'react'
 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
+import getID from '../common/getid'
+
+let genGetID = getID()
 
 const log = new WebLogger(null, 'MODAL', 'blue')
 
@@ -12,7 +15,7 @@ const PATH_TO_PREVIEW = process.env.REACT_APP_SERVER + '/static/images/'
 const style1 = {
     position: 'absolute',
     // top: '95%',
-    bottom: '1.5%',
+    bottom: '1%',
     left: '50%',
     transform: 'translate(-50%, 0)',
     bgcolor: 'background.paper',
@@ -36,7 +39,7 @@ export default function ImagesModal(props) {
     const { open, setImagesModalOpen, imagesModal } = props
     log.verbs('--- Start function ImagesModal')
 
-    // const [forceRerender, setForceRerender] = useState(true)
+    const [forceRerender, setForceRerender] = useState(true)
     const forCheck = useRef()
     const [currentImageTemp, setCurrentImageTemp] = useState(imagesModal.image)
     let currentImage = imagesModal.image
@@ -57,7 +60,15 @@ export default function ImagesModal(props) {
     if (/^https?:\/\//.test(currentImage)) linkTOimage = ''
 
     function selectOtherImage(mode) {
+        console.log(
+            '🚀 ~ file: ImagesModal.js:42 ~ ImagesModal ~ currentImageTemp',
+            currentImageTemp
+        )
         let newImageIndex = imagesModal.images.indexOf(currentImage)
+        console.log(
+            '🚀 ~ file: ImagesModal.js:62 ~ selectOtherImage ~ currentImage',
+            currentImage
+        )
         console.log('newImageIndex-1:', newImageIndex)
         const len = imagesModal.images.length
         console.log('length', len)
@@ -69,9 +80,15 @@ export default function ImagesModal(props) {
             if (newImageIndex < 0) newImageIndex = len - 1
         }
         console.log('newImageIndex-2:', newImageIndex)
+        console.log(imagesModal.images)
         // currentImage = imagesModal.images[newImageIndex]
         // setForceRerender(currentImage)
         setCurrentImageTemp(imagesModal.images[newImageIndex])
+        setForceRerender(genGetID.next().value)
+        console.log(
+            '🚀 ~ file: ImagesModal.js:76 ~ selectOtherImage ~ imagesModal.images[newImageIndex]',
+            imagesModal.images[newImageIndex]
+        )
     }
 
     return (
@@ -89,10 +106,28 @@ export default function ImagesModal(props) {
                     sx={{
                         // width: '100%',
                         // height: '100%',
-                        maxWidth: '100%',
-                        height: 'auto',
+                        // maxWidth: '100%',
+                        // height: 'auto',
                         display: 'block',
                         margin: '0 auto',
+                        maxWidth: '80vh',
+                        maxHeight: '80vh',
+                    }}
+                    onLoad={(e) => {
+                        const img = e.target
+                        // if (img.height > img.width) {
+                        //     console.log('file 1111111')
+                        //     // img.height = '100%'
+                        //     // img.width = '50'
+                        //     img.style.maxWidth = ''
+                        //     img.style.maxHeight = '70vh'
+                        // } else {
+                        //     console.log('file 222222')
+                        //     img.style.maxWidth = '100%'
+                        //     img.style.height = 'auto'
+                        // }
+                        const desc = img.nextSibling
+                        desc.style.width = img.width + 'px'
                     }}
                 />
                 <Box

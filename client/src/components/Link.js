@@ -107,7 +107,7 @@ export default function Link(props) {
                         {' '}
                         ({props.item.score})
                     </Typography>
-                )}
+                )}{' '}
                 <CopyButton />
                 <EditButton item={props.item} />
                 <IconButton
@@ -119,37 +119,47 @@ export default function Link(props) {
                 </IconButton>
                 <br />
                 <LinkWithCount item={props.item}>{props.item.url}</LinkWithCount>
-                <Typography variant='body2'>
-                    <Ahref
-                        to={'/links/' + props.item._id}
-                        underline='hover'
-                        component={RRLink}
-                        color='lightgray'
-                    >
-                        {props.item._id}
-                    </Ahref>
-                </Typography>
                 <Box>
                     {props.item.tags.map((item) => {
                         // return <Chip label={item.title} key={item._id} />
                         return <Tag item={item} key={item._id} />
                     })}
                 </Box>
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <VisibilityIcon color='success' fontSize='small' />
-                    <Typography pl={0.5} variant='body2' color='success.main'>
-                        Clicks: {props.item.clicks}
+                <Typography>{props.item.description}</Typography>
+                <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap' }}>
+                    {props.item.images.map((item) => (
+                        <ImagePreview
+                            onClick={(e) => handleImageModal(e, props.item)}
+                            image={item}
+                            key={item}
+                        />
+                    ))}
+                </Box>
+                <DateComp item={props.item} />
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                    }}
+                >
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        <VisibilityIcon color='success' fontSize='small' />
+                        <Typography pl={0.5} variant='body2' color='success.main'>
+                            Clicks: {props.item.clicks}
+                        </Typography>
+                    </Box>
+                    <Typography variant='body2'>
+                        <Ahref
+                            to={'/links/' + props.item._id}
+                            underline='hover'
+                            component={RRLink}
+                            color='lightgray'
+                        >
+                            {props.item._id}
+                        </Ahref>
                     </Typography>
                 </Box>
-                <Typography>{props.item.description}</Typography>
-                <DateComp item={props.item} />
-                {props.item.images.map((item) => (
-                    <ImagePreview
-                        onClick={(e) => handleImageModal(e, props.item)}
-                        image={item}
-                        key={item}
-                    />
-                ))}
             </Box>
         </Paper>
     )

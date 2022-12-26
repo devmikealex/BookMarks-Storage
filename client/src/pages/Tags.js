@@ -80,6 +80,8 @@ export default function Tags(props) {
                 setFilter={setFilter}
                 wrapper={wrapper}
                 buttonType={props.buttonType}
+                setTagsValue={props.setTagsValue}
+                // currentTags={props.tagsValue}
             />
             {/* {id && <p>ID={id}</p>} */}
             {tags && (

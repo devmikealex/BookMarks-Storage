@@ -6,6 +6,7 @@ import CloseIcon from '@mui/icons-material/Close'
 
 export default function InfoLog(props) {
     const { history } = props
+    let bgColor = props.bgColor ?? 'primary.main'
 
     const [open, setOpen] = useState(false)
     const handleClose = (event, reason) => {
@@ -57,6 +58,12 @@ export default function InfoLog(props) {
                 action={action}
                 autoHideDuration={5000}
                 message={history[0]?.message}
+                ContentProps={{
+                    sx: {
+                        color: 'white',
+                        backgroundColor: bgColor,
+                    },
+                }}
             />
         </>
     )
