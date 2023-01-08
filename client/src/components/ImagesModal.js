@@ -141,7 +141,9 @@ export default function ImagesModal(props) {
                     <Typography variant='body1' sx={{ fontWeight: '600' }}>
                         {imagesModal.title}
                     </Typography>
-                    <Typography variant='body1'>{currentImage}</Typography>
+                    <Typography variant='body1' sx={{ wordWrap: 'anywhere' }}>
+                        {currentImage}
+                    </Typography>
                 </Box>
                 <Box sx={style1}>
                     <Button size='small' onClick={() => selectOtherImage('prev')}>

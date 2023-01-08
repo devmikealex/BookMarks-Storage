@@ -68,7 +68,6 @@ export default function HttpFiles(props) {
             img.src = link
             img.removeAttribute('hidden')
         }
-        // TODO Зачем это тут??
         // if (props.funcAddImage) props.funcAddImage(e.target.value)
     }
 

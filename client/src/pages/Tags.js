@@ -64,8 +64,6 @@ export default function Tags(props) {
     }, [id, forceRerender, params])
     log.verbs('--- Start Render Tags')
 
-    //TODO пометить существующие теги для редактирования props.currentTags 'тег1, тег2, тег3'
-
     // TODO что то сделать с setSnackbar
 
     return (

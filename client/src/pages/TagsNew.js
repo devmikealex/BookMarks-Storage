@@ -106,7 +106,6 @@ export default function TagsNew(props) {
                 const inpTags = document.getElementById('inp-tags')
                 const divider = inpTags.value.trim() === '' ? '' : ', '
                 props.setTagsValue(inpTags.value + divider + myInputRef.current.value)
-                // TODO добавить новый тег в поле
                 myInputRef.current.value = ''
                 props.setFilter('')
             } else {

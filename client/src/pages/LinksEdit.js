@@ -227,7 +227,6 @@ export default function LinksEdit() {
                     disabled
                     maxRows={4}
                     onChange={handleChange}
-                    // TODO Check this shrink value
                     InputLabelProps={{ shrink: tagsValue.value }}
                 />
                 <Tags
@@ -235,8 +234,6 @@ export default function LinksEdit() {
                     buttonType='outlined'
                     currentTags={tagsValue}
                 />
-                {/* TODO проверять состояние тегов, если они есть в строке */}
-                {/* TODO список файлов с картинками и удалением */}
                 {/* <UploadFiles /> */}
                 <Box>
                     {item.images.map((image) => {
@@ -264,7 +261,6 @@ export default function LinksEdit() {
                     maxRows={2}
                     value={newImages.join(', ')}
                     // onChange={handleChangeImages}
-                    // TODO Check this shrink value
                     // InputLabelProps={{ shrink: imagesValue.value }}
                 /> */}
                 <Button
