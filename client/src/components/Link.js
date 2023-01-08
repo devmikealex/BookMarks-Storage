@@ -18,7 +18,7 @@ import { useContext, useState } from 'react'
 import Context from '../common/context'
 import DateComp from './Date'
 
-const PATH_TO_PREVIEW = process.env.REACT_APP_SERVER + '/static/images/'
+const PATH_TO_PREVIEW = window.PathToBMServer + '/static/images/'
 
 const log = new WebLogger(null, 'LINK', 'red')
 
@@ -125,7 +125,9 @@ export default function Link(props) {
                         return <Tag item={item} key={item._id} />
                     })}
                 </Box>
-                <Typography>{props.item.description}</Typography>
+                <Typography py={0.5}>
+                    <pre style={{ whiteSpace: 'pre-wrap' }}>{props.item.description}</pre>
+                </Typography>
                 <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap' }}>
                     {props.item.images.map((item) => (
                         <ImagePreview

@@ -1,11 +1,13 @@
-import { Box, Button, Paper, TextField, Typography } from '@mui/material'
+import { Box, Button, createTheme, Paper, TextField, Typography } from '@mui/material'
 import WebLogger from 'mylogger/web-version'
 import { useState } from 'react'
+
+import { alpha } from '@mui/material'
 
 const log = new WebLogger(null, 'UPLOAD', 'orange')
 
 const INPUT_NAME = 'my-upload-file'
-const url = `${process.env.REACT_APP_SERVER}/uploadfile`
+const url = `${window.PathToBMServer}/uploadfile`
 
 export function submitFiles(e) {
     log.verbs('--- Start function -submitFiles-')
@@ -41,6 +43,8 @@ export function submitFiles(e) {
 
 export default function Upload(props) {
     const [uploadsNum, setUploadsNum] = useState(1)
+
+    const theme = createTheme()
 
     const rows = []
     for (let i = 1; i <= uploadsNum; i++) {
@@ -78,7 +82,7 @@ export default function Upload(props) {
                             padding: '6px',
                         },
                         '& .MuiOutlinedInput-input:hover': {
-                            backgroundColor: 'AliceBlue',
+                            backgroundColor: alpha(theme.palette.primary.light, 0.2),
                         },
                         '& .MuiOutlinedInput-root': {
                             '& > fieldset': {

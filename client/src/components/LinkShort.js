@@ -18,7 +18,7 @@ import { useContext, useState } from 'react'
 import Context from '../common/context'
 import DateComp from './Date'
 
-const PATH_TO_PREVIEW = process.env.REACT_APP_SERVER + '/static/images/'
+const PATH_TO_PREVIEW = window.PathToBMServer + '/static/images/'
 
 const log = new WebLogger(null, 'LINK', 'red')
 

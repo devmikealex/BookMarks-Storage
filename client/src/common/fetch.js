@@ -11,7 +11,7 @@ const log = new WebLogger(null, 'myFetch', 'orange')
 export default async function myFetch(obj, path = 'links', method = 'GET') {
     log.verbs('--- Start function -myFetch-')
 
-    const url = `${process.env.REACT_APP_SERVER}/${path}`
+    const url = `${window.PathToBMServer}/bd/${path}`
     log.debug(`URL for fetch ${method} = ${url}`)
     log.debug('Object for fetch', obj)
 
@@ -52,7 +52,7 @@ export default async function myFetch(obj, path = 'links', method = 'GET') {
 export async function myFetch_new(obj, path = 'links', method = 'GET') {
     log.verbs('--- Start function -myFetch_new-')
 
-    const url = `${process.env.REACT_APP_SERVER}/${path}`
+    const url = `${window.PathToBMServer}/bd/${path}`
     log.debug(`URL for fetch ${method} ${url}`)
     log.debug('Object for fetch', obj)
 

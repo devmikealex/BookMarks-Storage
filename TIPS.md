@@ -1,6 +1,6 @@
-- [$regex â€” MongoDB Manual](https://www.mongodb.com/docs/manual/reference/operator/query/regex/)
+- [$regex â MongoDB Manual](https://www.mongodb.com/docs/manual/reference/operator/query/regex/)
 
-- [Text Search â€” MongoDB Manual](https://www.mongodb.com/docs/v3.2/text-search/)
+- [Text Search â MongoDB Manual](https://www.mongodb.com/docs/v3.2/text-search/)
 
 - [How to pass regex expression in JSON to API? - Stack Overflow](https://stackoverflow.com/questions/56471002/how-to-pass-regex-expression-in-json-to-api)
 

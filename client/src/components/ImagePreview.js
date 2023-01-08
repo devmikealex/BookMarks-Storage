@@ -1,6 +1,6 @@
 import { Box, Button, Typography } from '@mui/material'
 
-const PATH_TO_PREVIEW = process.env.REACT_APP_SERVER + '/static/images/'
+const PATH_TO_PREVIEW = window.PathToBMServer + '/static/images/'
 
 export default function ImagePreview(props) {
     let button = null,

@@ -10,7 +10,7 @@ let genGetID = getID()
 
 const log = new WebLogger(null, 'MODAL', 'blue')
 
-const PATH_TO_PREVIEW = process.env.REACT_APP_SERVER + '/static/images/'
+const PATH_TO_PREVIEW = window.PathToBMServer + '/static/images/'
 
 const style1 = {
     position: 'absolute',

@@ -24,6 +24,7 @@ const upload2 = multer({ storage: storage })
 
 const clc = require('cli-color')
 
+const BD_PREFIX = '/bd'
 const BD_NAME = 'test'
 const BD_URL = `mongodb://localhost:27017/${BD_NAME}`
 
@@ -59,8 +60,9 @@ app.use((req, res, next) => {
     next()
 })
 
-app.use('/tags', tagsRouter)
-app.use('/links', linksRouter)
+app.use(BD_PREFIX + '/tags', tagsRouter)
+app.use(BD_PREFIX + '/links', linksRouter)
+
 app.use('/uploadfile', upload2.any(), function (req, res, next) {
     for (const file of req.files) {
         file.originalname = Buffer.from(file.originalname, 'latin1').toString('utf8')
@@ -70,6 +72,10 @@ app.use('/uploadfile', upload2.any(), function (req, res, next) {
     res.json(req.files)
 })
 app.post('/geturlinfo', (req, res) => geturlinfo(req, res))
+
+app.get('*', (req, res) => {
+    res.sendFile('index.html', { root: '../client/build/' })
+})
 
 app.listen(PORT, () => {
     // console.log()

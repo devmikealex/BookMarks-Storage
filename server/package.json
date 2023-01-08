@@ -1,4 +1,7 @@
 {
+  "name": "BookMarks Server",
+  "version": "0.5.0",
+  "private": true,
   "dependencies": {
     "@extractus/article-extractor": "^7.2.8-rc1",
     "buffer": "^6.0.3",

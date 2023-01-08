@@ -31,12 +31,12 @@ export default function Navbar() {
                     <Link to='/links/?limit=5&sfield=title&sorder=1'>Link SORT</Link>
                 </li>
                 <li>
-                    <a href={`${process.env.REACT_APP_SERVER}/tags/createTestTags`}>
+                    <a href={`${window.PathToBMServer}/bd/tags/createTestTags`}>
                         createTestTags
                     </a>
                 </li>
                 <li>
-                    <a href={`${process.env.REACT_APP_SERVER}/tags/counters/sync`}>
+                    <a href={`${window.PathToBMServer}/bd/tags/counters/sync`}>
                         synccounters
                     </a>
                 </li>

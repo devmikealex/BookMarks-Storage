@@ -110,7 +110,8 @@ function App() {
                         />
                         <InfoLog history={history} />
                         <h2>
-                            {process.env.REACT_APP_SERVER} - {process.env.NODE_ENV}
+                            {/* {process.env.REACT_APP_SERVER} - {process.env.NODE_ENV} */}
+                            {process.env.NODE_ENV} - {window.PathToBMServer}
                         </h2>
                         <Navbar />
                         <Routes>
