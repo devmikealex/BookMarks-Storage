@@ -89,7 +89,11 @@ export default function Search(props) {
                                     key={item._id}
                                     sx={{ paddingY: 0.5 }}
                                 >
-                                    <LinkShort item={item} key={item._id} />
+                                    <LinkShort
+                                        item={item}
+                                        key={item._id}
+                                        searchString={q.get('q')}
+                                    />
                                 </ListItemButton>
                                 <Divider />
                             </>

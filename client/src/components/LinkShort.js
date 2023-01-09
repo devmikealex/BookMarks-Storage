@@ -56,7 +56,9 @@ export default function Link(props) {
         // <Paper variant='outlined' sx={{ m: 2, boxShadow: 3 }}>
         <Box sx={{ p: 0 }}>
             <Ahref to={'/links/' + props.item._id} underline='hover' component={RRLink}>
-                <Typography component='span'>{props.item.title}</Typography>
+                <Typography component='span'>
+                    <TextWithark text={props.item.title} mark={props.searchString} />
+                </Typography>
             </Ahref>
             <br />
             <Box>
@@ -67,4 +69,16 @@ export default function Link(props) {
         </Box>
         // </Paper>
     )
+}
+
+function TextWithark(props) {
+    const { text, mark } = props
+
+    let newText = text
+    if (mark !== '') {
+        let regex = new RegExp(mark, 'gi')
+        newText = text.replace(regex, '<mark>$&</mark>')
+    }
+
+    return <span dangerouslySetInnerHTML={{ __html: newText }}></span>
 }
