@@ -52,7 +52,12 @@ export default async function myFetch(obj, path = 'links', method = 'GET') {
 export async function myFetch_new(obj, path = 'links', method = 'GET') {
     log.verbs('--- Start function -myFetch_new-')
 
-    const url = `${window.PathToBMServer}/bd/${path}`
+    console.log('🚀 ~ file: fetch.js:57 ~ myFetch_new ~ path', path)
+    if (path.startsWith('links') || path.startsWith('tags')) {
+        path = 'bd/' + path
+    }
+
+    const url = `${window.PathToBMServer}/${path}`
     log.debug(`URL for fetch ${method} ${url}`)
     log.debug('Object for fetch', obj)
 

@@ -1,28 +1,20 @@
-# Название
-Севрер: Node.js + Express
-MongoDB + Mongoose
+# BookMarks Storage ❌ WIP
 
-Клиент: React + React Router + Material UI
+Персональный **self-hosted** сервис для хранения и организации ссылок на сайты в интернете. Есть поддержка тэгов, возможность добавлять изображения для предпросмотра. Данные хранятся на сервере MongoDB, доступ к ним осуществляется из браузера через сервер Express.
 
+![preview](./docs/assets/preview.jpg)
 
-## Сервер
+### Использованные технологии:
 
----
+**Сервер**:
 
-### Routers Scheme
+- Node.js
+- Express
+- MongoDB
+- Mongoose
 
-#### `/tags/` GET
+**Клиент SPA**:
 
-JSON список всех тегов в виде массива объектов из БД.
-
-#### `/tags/filter/` POST
-
-Список отфильтроновых тегов в виде массива объектов из БД. Фильтр отправляется в виде JSON.
-
-#### `/:id` GET
-
-Одни тэг по индетификатору в виде JSON.
-
-#### `/createTestTags` GET
-
-Тестовая функция слзданяия 3-х тегов.
+- React
+- React Router
+- Material UI
